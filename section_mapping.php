@@ -15,7 +15,7 @@
 require 'tools/DOMDocument_createElement_simple.php';
 $dom=new DOMDocumentCustom;
 $dom->formatOutput=true;
-require 'tools/selector.php';
+require 'selector.php';
 
 require 'class_rc_rank.php';
 $rc_rank=new rc_rank;
