@@ -1,12 +1,12 @@
 <?Php
 if(!isset($dom))
 {
-	require 'DOMDocument_createElement_simple.php';
+	require 'tools/DOMDocument_createElement_simple.php';
 	$dom=new DOMDocumentCustom;
 	$dom->formatOutput=true;
 }
 
-function selector($title,$objects,$target,$get_parameter)
+function selector($title,$objects,$target,$get_parameter,$return_dom=false)
 {
 	global $dom;
 	$div=$dom->createElement_simple('div',false,array('id'=>$get_parameter));
@@ -22,6 +22,9 @@ function selector($title,$objects,$target,$get_parameter)
 		$li=$dom->createElement_simple('li',$ul);
 		$dom->createElement_simple('a',$li,array('href'=>$target.'?'.$arguments),$value);
 	}
-	return $dom->saveXML($div);
+	if($return_dom===false)
+		return $dom->saveXML($div);
+	else
+		return $div;
 }
 ?>
