@@ -1,0 +1,1423 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns3="http://json.jettison.codehaus.org" xmlns:tns2="http://model.myrcm.rctiming.ch" xmlns:tns1="http://dto.myrcm.rctiming.ch" xmlns:intf="http://soap.webservice.myrcm.rctiming.ch" xmlns:impl="http://soap.webservice.myrcm.rctiming.ch" xmlns:apachesoap="http://xml.apache.org/xml-soap" targetNamespace="http://soap.webservice.myrcm.rctiming.ch">
+  <wsdl:types>
+<schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns3="http://json.jettison.codehaus.org" xmlns:tns2="http://model.myrcm.rctiming.ch" xmlns:tns1="http://dto.myrcm.rctiming.ch" xmlns:intf="http://soap.webservice.myrcm.rctiming.ch" xmlns:impl="http://soap.webservice.myrcm.rctiming.ch" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://soap.webservice.myrcm.rctiming.ch">
+			
+  <import namespace="http://json.jettison.codehaus.org"/>
+			
+  <import namespace="http://xml.apache.org/xml-soap"/>
+			
+  <import namespace="http://dto.myrcm.rctiming.ch"/>
+
+			
+  <element name="authenticate">
+				
+    <complexType>
+					
+      <sequence>
+						
+        <element name="user" type="xsd:string"/>
+						
+        <element name="password" type="xsd:string"/>
+					
+      </sequence>
+				
+    </complexType>
+			
+  </element>
+			
+  <element name="authenticateResponse">
+				
+    <complexType>
+					
+      <sequence>
+						
+        <element name="authorizationDto" type="tns1:AuthorizationDto"/>
+					
+      </sequence>
+				
+    </complexType>
+			
+  </element>
+			
+  <element name="getCustomerList">
+				
+    <complexType>
+					
+      <sequence>
+						
+        <element name="authorization" type="xsd:string"/>
+					
+      </sequence>
+				
+    </complexType>
+			
+  </element>
+			
+  <element name="getCustomerListResponse">
+				
+    <complexType>
+					
+      <sequence>
+						
+        <element name="customerListResponseDto" type="tns1:CustomerListResponseDto"/>
+					
+      </sequence>
+				
+    </complexType>
+			
+  </element>
+			
+  <element name="getAccount">
+				
+    <complexType>
+					
+      <sequence>
+						
+        <element name="authorization" type="xsd:string"/>
+						
+        <element name="uuid" type="xsd:string"/>
+					
+      </sequence>
+				
+    </complexType>
+			
+  </element>
+			
+  <element name="getAccountResponse">
+				
+    <complexType>
+					
+      <sequence>
+						
+        <element name="accountResponseDto" type="tns1:AccountResponseDto"/>
+					
+      </sequence>
+				
+    </complexType>
+			
+  </element>
+			
+  <element name="getAccountList">
+				
+    <complexType>
+					
+      <sequence>
+						
+        <element name="authorization" type="xsd:string"/>
+					
+      </sequence>
+				
+    </complexType>
+			
+  </element>
+			
+  <element name="getAccountListResponse">
+				
+    <complexType>
+					
+      <sequence>
+						
+        <element name="accountListResponseDto" type="tns1:AccountListResponseDto"/>
+					
+      </sequence>
+				
+    </complexType>
+			
+  </element>
+			
+  <element name="getEventList">
+				
+    <complexType>
+					
+      <sequence>
+						
+        <element name="authorization" type="xsd:string"/>
+						
+        <element name="eventType" type="tns1:EventFilter"/>
+					
+      </sequence>
+				
+    </complexType>
+			
+  </element>
+			
+  <element name="getEventListResponse">
+				
+    <complexType>
+					
+      <sequence>
+						
+        <element name="eventListResponseDto" type="tns1:EventListResponseDto"/>
+					
+      </sequence>
+				
+    </complexType>
+			
+  </element>
+			
+  <element name="getSectionList">
+				
+    <complexType>
+					
+      <sequence>
+						
+        <element name="authorization" type="xsd:string"/>
+						
+        <element name="eventKey" type="xsd:long"/>
+					
+      </sequence>
+				
+    </complexType>
+			
+  </element>
+			
+  <element name="getSectionListResponse">
+				
+    <complexType>
+					
+      <sequence>
+						
+        <element name="sectionListResponseDto" type="tns1:SectionListResponseDto"/>
+					
+      </sequence>
+				
+    </complexType>
+			
+  </element>
+			
+  <element name="syncEvent">
+				
+    <complexType>
+					
+      <sequence>
+						
+        <element name="authorization" type="xsd:string"/>
+						
+        <element name="eventDto" type="tns1:EventDto"/>
+					
+      </sequence>
+				
+    </complexType>
+			
+  </element>
+			
+  <element name="syncEventResponse">
+				
+    <complexType>
+					
+      <sequence>
+						
+        <element name="resultDto" type="tns1:ResultDto"/>
+					
+      </sequence>
+				
+    </complexType>
+			
+  </element>
+			
+  <element name="syncBooking">
+				
+    <complexType>
+					
+      <sequence>
+						
+        <element name="authorization" type="xsd:string"/>
+						
+        <element name="eventKey" type="xsd:long"/>
+						
+        <element name="bookingDto" type="tns1:BookingDto"/>
+					
+      </sequence>
+				
+    </complexType>
+			
+  </element>
+			
+  <element name="syncBookingResponse">
+				
+    <complexType>
+					
+      <sequence>
+						
+        <element name="resultDto" type="tns1:ResultDto"/>
+					
+      </sequence>
+				
+    </complexType>
+			
+  </element>
+			
+  <element name="syncEvents">
+				
+    <complexType>
+					
+      <sequence>
+						
+        <element name="authorization" type="xsd:string"/>
+						
+        <element name="eventListDto" type="tns1:EventListDto"/>
+					
+      </sequence>
+				
+    </complexType>
+			
+  </element>
+			
+  <element name="syncEventsResponse">
+				
+    <complexType>
+					
+      <sequence>
+						
+        <element name="resultDto" type="tns1:ResultDto"/>
+					
+      </sequence>
+				
+    </complexType>
+			
+  </element>
+			
+  <element name="syncBookings">
+				
+    <complexType>
+					
+      <sequence>
+						
+        <element name="authorization" type="xsd:string"/>
+						
+        <element name="eventKey" type="xsd:long"/>
+						
+        <element name="bookingListDto" type="tns1:BookingListDto"/>
+					
+      </sequence>
+				
+    </complexType>
+			
+  </element>
+			
+  <element name="syncBookingsResponse">
+				
+    <complexType>
+					
+      <sequence>
+						
+        <element name="resultDto" type="tns1:ResultDto"/>
+					
+      </sequence>
+				
+    </complexType>
+			
+  </element>
+			
+  <element name="syncSection">
+				
+    <complexType>
+					
+      <sequence>
+						
+        <element name="authorization" type="xsd:string"/>
+						
+        <element name="eventKey" type="long"/>
+						
+        <element name="sectionDto" type="tns1:SectionDto"/>
+					
+      </sequence>
+				
+    </complexType>
+			
+  </element>
+			
+  <element name="syncSectionResponse">
+				
+    <complexType>
+					
+      <sequence>
+						
+        <element name="resultDto" type="tns1:ResultDto"/>
+					
+      </sequence>
+				
+    </complexType>
+			
+  </element>
+			
+  <element name="syncSections">
+				
+    <complexType>
+					
+      <sequence>
+						
+        <element name="authorization" type="xsd:string"/>
+						
+        <element name="eventKey" type="long"/>
+						
+        <element name="sectionListDto" type="tns1:SectionListDto"/>
+					
+      </sequence>
+				
+    </complexType>
+			
+  </element>
+			
+  <element name="syncSectionsResponse">
+				
+    <complexType>
+					
+      <sequence>
+						
+        <element name="resultDto" type="tns1:ResultDto"/>
+					
+      </sequence>
+				
+    </complexType>
+			
+  </element>	
+			
+  <element name="syncChampionship">
+				
+    <complexType>
+					
+      <sequence>
+						
+        <element name="authorization" type="xsd:string"/>
+						
+        <element name="championshipDto" type="tns1:ChampionshipDto"/>
+					
+      </sequence>
+				
+    </complexType>
+			
+  </element>
+			
+  <element name="syncChampionshipResponse">
+				
+    <complexType>
+					
+      <sequence>
+						
+        <element name="resultDto" type="tns1:ResultDto"/>
+					
+      </sequence>
+				
+    </complexType>
+			
+  </element>
+		
+</schema>
+<schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns3="http://json.jettison.codehaus.org" xmlns:tns2="http://model.myrcm.rctiming.ch" xmlns:tns1="http://dto.myrcm.rctiming.ch" xmlns:intf="http://soap.webservice.myrcm.rctiming.ch" xmlns:impl="http://soap.webservice.myrcm.rctiming.ch" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://dto.myrcm.rctiming.ch">
+			
+  <import namespace="http://json.jettison.codehaus.org"/>
+			
+  <import namespace="http://soap.webservice.myrcm.rctiming.ch"/>
+			
+  <import namespace="http://xml.apache.org/xml-soap"/>
+
+			
+  <simpleType name="EventFilter">
+				
+    <restriction base="string">
+					
+      <enumeration value="ONLINE"/>
+					
+      <enumeration value="UPCOMING"/>
+					
+      <enumeration value="ARCHIV"/>
+					
+      <enumeration value="ALL"/>
+				
+    </restriction>
+			
+  </simpleType>
+			
+  <simpleType name="EventType">
+				
+    <restriction base="string">
+					
+      <enumeration value="ONROAD"/>
+					
+      <enumeration value="OFFROAD"/>
+					
+      <enumeration value="STOCKCAR"/>
+					
+      <enumeration value="BOAT"/>
+					
+      <enumeration value="KARTING"/>
+					
+      <enumeration value="OTHER_SPORT"/>
+				
+    </restriction>
+			
+  </simpleType>
+			
+  <simpleType name="ModelType">
+				
+    <restriction base="string">
+					
+      <enumeration value="NITRO"/>
+					
+      <enumeration value="GASOLINE"/>
+					
+      <enumeration value="ELECTRIC"/>
+					
+      <enumeration value="OTHER_TYPE"/>
+				
+    </restriction>
+			
+  </simpleType>
+			
+  <simpleType name="ModelScale">
+				
+    <restriction base="string">
+					
+      <enumeration value="SCALE_1_5"/>
+					
+      <enumeration value="SCALE_1_6"/>
+					
+      <enumeration value="SCALE_1_8"/>
+					
+      <enumeration value="SCALE_1_10"/>
+					
+      <enumeration value="SCALE_1_12"/>
+					
+      <enumeration value="SCALE_1_18"/>
+					
+      <enumeration value="SCALE_1_24"/>
+					
+      <enumeration value="SCALE_OTHER"/>
+				
+    </restriction>
+			
+  </simpleType>
+			
+  <simpleType name="ActiveFrequency">
+				
+    <restriction base="string">
+					
+      <enumeration value="FREQUENCY1"/>
+					
+      <enumeration value="FREQUENCY2"/>
+					
+      <enumeration value="FREQUENCY3"/>
+					
+      <enumeration value="FREQUENCY4"/>
+					
+      <enumeration value="DSM"/>
+				
+    </restriction>
+			
+  </simpleType>
+
+			
+  <simpleType name="ResultCode">
+				
+    <restriction base="string">
+					
+      <enumeration value="OK"/>
+					
+      <enumeration value="FAILED"/>
+					
+      <enumeration value="ERROR"/>
+				
+    </restriction>
+			
+  </simpleType>
+			
+  <complexType name="AuthorizationDto">
+				
+    <sequence>
+					
+      <element name="code" type="tns1:ResultCode"/>
+					
+      <element name="authorization" type="xsd:string"/>
+					
+      <element name="message" nillable="true" type="xsd:string"/>
+				
+    </sequence>
+			
+  </complexType>
+			
+  <complexType name="ResultDto">
+				
+    <sequence>
+					
+      <element name="code" type="tns1:ResultCode"/>
+					
+      <element name="primaryKey" type="xsd:long"/>
+					
+      <element name="externalKey" type="xsd:long"/>
+					
+      <element name="message" nillable="true" type="xsd:string"/>
+					
+      <element maxOccurs="unbounded" minOccurs="0" name="errorList" nillable="true" type="tns1:ResultDto"/>
+				
+    </sequence>
+			
+  </complexType>
+			
+  <complexType name="EventListResponseDto">
+				
+    <sequence>
+					
+      <element name="code" type="tns1:ResultCode"/>
+					
+      <element name="message" nillable="true" type="xsd:string"/>
+					
+      <element name="eventListDto" type="tns1:EventListDto"/>
+				
+    </sequence>
+			
+  </complexType>
+			
+  <complexType name="CustomerListResponseDto">
+				
+    <sequence>
+					
+      <element name="code" type="tns1:ResultCode"/>
+					
+      <element name="message" nillable="true" type="xsd:string"/>
+					
+      <element name="customerListDto" type="tns1:CustomerListDto"/>
+				
+    </sequence>
+			
+  </complexType>	
+			
+  <complexType name="AccountResponseDto">
+				
+    <sequence>
+					
+      <element name="code" type="tns1:ResultCode"/>
+					
+      <element name="message" nillable="true" type="xsd:string"/>
+					
+      <element name="accountDto" type="tns1:AccountDto"/>
+				
+    </sequence>
+			
+  </complexType>	
+			
+  <complexType name="AccountListResponseDto">
+				
+    <sequence>
+					
+      <element name="code" type="tns1:ResultCode"/>
+					
+      <element name="message" nillable="true" type="xsd:string"/>
+					
+      <element name="accountListDto" type="tns1:AccountListDto"/>
+				
+    </sequence>
+			
+  </complexType>	
+			
+  <complexType name="SectionListResponseDto">
+				
+    <sequence>
+					
+      <element name="code" type="tns1:ResultCode"/>
+					
+      <element name="message" nillable="true" type="xsd:string"/>
+					
+      <element name="sectionListDto" type="tns1:SectionListDto"/>
+				
+    </sequence>
+			
+  </complexType>											
+			
+  <complexType name="CustomerDto">
+				
+    <sequence>
+					
+      <element name="primaryKey" nillable="false" type="xsd:long"/>
+					
+      <element name="title" nillable="false" type="xsd:string"/>
+					
+      <element name="name" nillable="false" type="xsd:string"/>
+					
+      <element name="prename" nillable="false" type="xsd:string"/>
+					
+      <element name="address" nillable="true" type="xsd:string"/>
+					
+      <element name="zipCode" nillable="true" type="xsd:string"/>
+					
+      <element name="location" nillable="true" type="xsd:string"/>
+					
+      <element name="country" nillable="true" type="xsd:string"/>
+					
+      <element name="phone" nillable="true" type="xsd:string"/>
+					
+      <element name="fax" nillable="true" type="xsd:string"/>
+					
+      <element name="mobile" nillable="true" type="xsd:string"/>
+					
+      <element name="email" nillable="true" type="xsd:string"/>
+					
+      <element name="web" nillable="true" type="xsd:string"/>
+				
+    </sequence>
+			
+  </complexType>
+			
+  <element name="CustomerDto" nillable="true" type="tns1:CustomerDto"/>
+			
+  <complexType name="CustomerListDto">
+		        
+    <sequence>
+		            
+      <element maxOccurs="unbounded" minOccurs="0" name="CustomerDto" nillable="true" type="tns1:CustomerDto"/>
+		        
+    </sequence>				
+			
+  </complexType>
+			
+  <element name="CustomerListDto" nillable="true" type="tns1:CustomerListDto"/>
+			
+  <complexType name="AccountDto">
+				
+    <sequence>
+					
+      <element name="primaryKey" nillable="false" type="xsd:long"/>
+					
+      <element name="name" nillable="false" type="xsd:string"/>
+					
+      <element name="prename" nillable="false" type="xsd:string"/>
+					
+      <element name="address" nillable="true" type="xsd:string"/>
+					
+      <element name="zipCode" nillable="true" type="xsd:string"/>
+					
+      <element name="location" nillable="true" type="xsd:string"/>
+					
+      <element name="country" nillable="true" type="xsd:string"/>
+					
+      <element name="phone" nillable="true" type="xsd:string"/>
+					
+      <element name="fax" nillable="true" type="xsd:string"/>
+					
+      <element name="mobile" nillable="true" type="xsd:string"/>
+					
+      <element name="email" nillable="true" type="xsd:string"/>
+					
+      <element name="web" nillable="true" type="xsd:string"/>
+					
+      <element name="birthday" nillable="false" type="xsd:dateTime"/>
+					
+      <element name="block" nillable="true" type="xsd:string"/>
+					
+      <element name="club" nillable="true" type="xsd:string"/>
+					
+      <element name="licence" nillable="true" type="xsd:string"/>
+					
+      <element name="licenceNr" nillable="true" type="xsd:string"/>
+					
+      <element name="frequency1" nillable="true" type="xsd:long"/>
+					
+      <element name="frequency2" nillable="true" type="xsd:long"/>
+					
+      <element name="frequency3" nillable="true" type="xsd:long"/>
+					
+      <element name="frequency4" nillable="true" type="xsd:long"/>
+					
+      <element name="multiChannel" nillable="true" type="xsd:boolean"/>
+					
+      <element name="transponder1" nillable="true" type="xsd:long"/>
+					
+      <element name="carId1" nillable="true" type="xsd:int"/>
+					
+      <element name="transponder2" nillable="true" type="xsd:long"/>
+					
+      <element name="carId2" nillable="true" type="xsd:int"/>
+					
+      <element name="transponder3" nillable="true" type="xsd:long"/>
+					
+      <element name="carId3" nillable="true" type="xsd:int"/>
+					
+      <element name="transponder4" nillable="true" type="xsd:long"/>
+					
+      <element name="carId4" nillable="true" type="xsd:int"/>
+				
+    </sequence>
+			
+  </complexType>
+			
+  <element name="AccountDto" nillable="true" type="tns1:AccountDto"/>
+			
+  <complexType name="AccountListDto">
+		        
+    <sequence>
+		            
+      <element maxOccurs="unbounded" minOccurs="0" name="AccountDto" nillable="true" type="tns1:AccountDto"/>
+		        
+    </sequence>				
+			
+  </complexType>
+			
+  <element name="AccountListDto" nillable="true" type="tns1:AccountListDto"/>
+			
+  <complexType name="EventDto">
+				
+    <sequence>
+					
+      <element name="primaryKey" nillable="false" type="xsd:long"/>
+					
+      <element name="externalKey" nillable="false" type="xsd:long"/>
+					
+      <element name="customerKey" nillable="false" type="xsd:long"/>
+					
+      <element name="eventName" nillable="false" type="xsd:string"/>
+					
+      <element name="hostName" nillable="false" type="xsd:string"/>
+					
+      <element name="block" nillable="true" type="xsd:string"/>
+					
+      <element name="startDate" nillable="false" type="xsd:dateTime"/>
+					
+      <element name="endDate" nillable="false" type="xsd:dateTime"/>
+					
+      <element default="ONROAD" name="eventType" nillable="false" type="tns1:EventType"/>
+					
+      <element name="subDirectory" nillable="true" type="xsd:string"/>
+					
+      <element default="true" name="registrationActive" type="xsd:boolean"/>
+					
+      <element name="openRegistrationDate" nillable="false" type="xsd:dateTime"/>
+					
+      <element name="closeRegistrationDate" nillable="false" type="xsd:dateTime"/>
+					
+      <element name="notification" nillable="true" type="xsd:string"/>
+					
+      <element default="false" name="accountRequired" type="xsd:boolean"/>
+					
+      <element default="120" name="maxRegistrations" type="xsd:long"/>
+					
+      <element name="customerLink" nillable="true" type="xsd:string"/>
+					
+      <element name="registrationLink" nillable="false" type="xsd:string"/>
+					
+      <element default="false" name="limitationBySection" type="xsd:boolean"/>
+					
+      <element default="false" name="waitingList" type="xsd:boolean"/>
+					
+      <element default="false" name="showWaitingList" type="xsd:boolean"/>
+					
+      <element name="notificationMessage" nillable="true" type="xsd:string"/>
+					
+      <element name="registrationMessage" nillable="true" type="xsd:string"/>
+					
+      <element name="streamingMessage" nillable="true" type="xsd:string"/>
+					
+      <element default="false" name="paypal" type="xsd:boolean"/>
+					
+      <element name="currency" nillable="true" type="xsd:string"/>
+					
+      <element default="0" name="entryFee" type="xsd:int"/>
+					
+      <element default="false" name="sectionEntryFee" type="xsd:boolean"/>
+					
+      <element default="false" name="processed" type="xsd:boolean"/>
+					
+      <element default="false" name="counted" type="xsd:boolean"/>
+				
+    </sequence>
+			
+  </complexType>
+			
+  <element name="EventDto" nillable="true" type="tns1:EventDto"/>
+			
+  <complexType name="EventListDto">
+		        
+    <sequence>
+		            
+      <element maxOccurs="unbounded" minOccurs="0" name="EventDto" nillable="true" type="tns1:EventDto"/>
+		        
+    </sequence>			
+			
+  </complexType>
+			
+  <element name="EventListDto" nillable="true" type="tns1:EventListDto"/>
+			
+  <complexType name="SectionDto">
+				
+    <sequence>
+					
+      <element name="primaryKey" nillable="false" type="xsd:long"/>
+					
+      <element name="externalKey" nillable="false" type="xsd:long"/>
+					
+      <element name="name" nillable="false" type="xsd:string"/>
+					
+      <element name="code" nillable="false" type="xsd:string"/>
+					
+      <element name="subDirectory" nillable="false" type="xsd:string"/>
+					
+      <element default="1" name="index" nillable="true" type="xsd:int"/>
+					
+      <element default="NITRO" name="modelType" nillable="false" type="tns1:ModelType"/>
+					
+      <element default="SCALE_1_8" name="modelScale" nillable="false" type="tns1:ModelScale"/>
+					
+      <element default="true" name="registration" nillable="true" type="xsd:boolean"/>
+					
+      <element default="0" name="subscriptionLimit" type="xsd:int"/>
+					
+      <element default="false" name="transponderRequired" nillable="true" type="xsd:boolean"/>
+					
+      <element default="false" name="licenseRequired" nillable="true" type="xsd:boolean"/>
+					
+      <element default="false" name="birthdayRequired" nillable="true" type="xsd:boolean"/>
+					
+      <element name="entryFee" nillable="true" type="xsd:int"/>
+					
+      <element default="0" name="juniorEntryFee" type="xsd:int"/>
+					
+      <element default="0" name="youthEntryFee" nillable="true" type="xsd:int"/>
+					
+      <element default="0" name="seniorEntryFee" type="xsd:int"/>
+					
+      <element default="false" name="ageGroupEntryFee" type="xsd:boolean"/>
+					
+      <element name="juniorAge" nillable="true" type="xsd:int"/>
+					
+      <element name="youthAge" type="xsd:int"/>
+					
+      <element name="seniorAge" nillable="true" type="xsd:int"/>
+					
+      <element name="topQualifierPoints" nillable="true" type="xsd:int"/>
+					
+      <element name="finalAttendeePoints" nillable="true" type="xsd:int"/>
+					
+      <element name="finalPointSchema" nillable="true" type="xsd:int"/>
+				
+    </sequence>
+			
+  </complexType>
+			
+  <element name="SectionDto" nillable="true" type="tns1:SectionDto"/>
+			
+  <complexType name="SectionListDto">
+		        
+    <sequence>
+		            
+      <element maxOccurs="unbounded" minOccurs="0" name="SectionDto" nillable="true" type="tns1:SectionDto"/>
+		        
+    </sequence>	
+			
+  </complexType>
+			
+  <element name="SectionListDto" nillable="true" type="tns1:SectionListDto"/>
+			
+  <complexType name="BookingDto">
+				
+    <sequence>
+					
+      <element name="primaryKey" nillable="false" type="xsd:long"/>
+					
+      <element name="externalKey" nillable="false" type="xsd:long"/>
+					
+      <element name="accountKey" nillable="false" type="xsd:long"/>
+					
+      <element name="sectionCode" nillable="false" type="xsd:string"/>
+					
+      <element name="name" nillable="false" type="xsd:string"/>
+					
+      <element name="prename" nillable="false" type="xsd:string"/>
+					
+      <element name="address" nillable="true" type="xsd:string"/>
+					
+      <element name="zipCode" nillable="true" type="xsd:string"/>
+					
+      <element name="location" nillable="true" type="xsd:string"/>
+					
+      <element name="country" nillable="true" type="xsd:string"/>
+					
+      <element name="phone" nillable="true" type="xsd:string"/>
+					
+      <element name="email" nillable="true" type="xsd:string"/>
+					
+      <element name="birthday" nillable="true" type="xsd:dateTime"/>
+					
+      <element name="club" nillable="true" type="xsd:string"/>
+					
+      <element name="block" nillable="true" type="xsd:string"/>
+					
+      <element name="team" nillable="true" type="xsd:string"/>
+					
+      <element default="0" name="pilotNr" type="xsd:int"/>
+					
+      <element name="licence" nillable="true" type="xsd:string"/>
+					
+      <element name="licenceNr" nillable="true" type="xsd:string"/>
+					
+      <element name="mechanicName" nillable="true" type="xsd:string"/>
+					
+      <element name="mechanicPrename" nillable="true" type="xsd:string"/>
+					
+      <element default="0" name="transponder1" nillable="false" type="xsd:long"/>
+					
+      <element default="0" name="transponder2" nillable="false" type="xsd:long"/>
+					
+      <element default="0" name="transponder3" nillable="false" type="xsd:long"/>
+					
+      <element default="0" name="transponder4" nillable="false" type="xsd:long"/>
+					
+      <element default="0" name="carId1" type="xsd:int"/>
+					
+      <element default="0" name="carId2" type="xsd:int"/>
+					
+      <element default="0" name="carId3" type="xsd:int"/>
+					
+      <element default="0" name="carId4" type="xsd:int"/>
+					
+      <element default="0" name="frequency1" nillable="false" type="xsd:long"/>
+					
+      <element default="0" name="frequency2" nillable="false" type="xsd:long"/>
+					
+      <element default="0" name="frequency3" nillable="false" type="xsd:long"/>
+					
+      <element default="0" name="frequency4" nillable="false" type="xsd:long"/>
+					
+      <element default="false" name="synthesizer" type="xsd:boolean"/>
+					
+      <element default="DSM" name="activeFrequency" type="tns1:ActiveFrequency"/>
+					
+      <element name="model" nillable="true" type="xsd:string"/>
+					
+      <element name="engine" nillable="true" type="xsd:string"/>
+					
+      <element name="body" nillable="true" type="xsd:string"/>
+					
+      <element name="radio" nillable="true" type="xsd:string"/>
+					
+      <element name="tire" nillable="true" type="xsd:string"/>
+					
+      <element name="battery" nillable="true" type="xsd:string"/>
+					
+      <element default="false" name="payment" type="xsd:boolean"/>
+					
+      <element name="comment" nillable="true" type="xsd:string"/>
+					
+      <element name="bookingDate" nillable="true" type="xsd:dateTime"/>
+				
+    </sequence>
+			
+  </complexType>
+			
+  <element name="BookingDto" nillable="true" type="tns1:BookingDto"/>
+			
+  <complexType name="BookingListDto">
+		        
+    <sequence>
+		            
+      <element maxOccurs="unbounded" minOccurs="0" name="BookingDto" nillable="true" type="tns1:BookingDto"/>
+		        
+    </sequence>	
+			
+  </complexType>
+			
+  <element name="BookingListDto" nillable="true" type="tns1:BookingListDto"/>	
+			
+  <complexType name="ChampionshipDto">
+				
+    <sequence>
+					
+      <element name="externalKey" nillable="false" type="xsd:long"/>
+					
+      <element name="customerKey" nillable="false" type="xsd:long"/>
+					
+      <element name="name" nillable="false" type="xsd:string"/>
+					
+      <element name="year" nillable="false" type="xsd:int"/>
+					
+      <element name="nrOfEvents" nillable="false" type="xsd:int"/>
+					
+      <element name="nrOfNotCountedEvents" nillable="false" type="xsd:int"/>
+					
+      <element name="section" nillable="false" type="tns1:SectionDto"/>
+					
+      <element name="eventList" nillable="false" type="tns1:EventListDto"/>
+					<!-- <element name="rankingList" nillable="false" type="tns1:RankingListDto" />  -->
+				
+    </sequence>
+			
+  </complexType>
+			
+  <element name="ChampionshipDto" nillable="true" type="tns1:ChampionshipDto"/>
+			
+  <complexType name="RankingDto">
+				
+    <sequence>
+					
+      <element name="rank" nillable="false" type="xsd:int"/>
+					
+      <element name="countedPoints" nillable="false" type="xsd:int"/>
+					
+      <element name="notCountedPoints" nillable="false" type="xsd:int"/>
+					
+      <element name="eventInfo" nillable="false" type="xsd:string"/>
+					
+      <element name="account" nillable="false" type="tns1:AccountDto"/>
+					
+      <element name="pointList" nillable="false" type="tns1:PointListDto"/>								
+				
+    </sequence>
+			
+  </complexType>
+			
+  <element name="RankingDto" nillable="true" type="tns1:RankingDto"/>		
+			
+  <complexType name="RankingListDto">
+		        
+    <sequence>
+		            
+      <element maxOccurs="unbounded" minOccurs="0" name="RankingDto" nillable="true" type="tns1:RankingDto"/>
+		        
+    </sequence>	
+			
+  </complexType>
+			
+  <element name="RankingListDto" nillable="true" type="tns1:RankingListDto"/>	
+			
+  <complexType name="PointDto">
+				
+    <sequence>
+					
+      <element name="eventKey" nillable="false" type="xsd:long"/>
+					
+      <element name="eventNr" nillable="false" type="xsd:int"/>
+					
+      <element name="resultPoints" nillable="false" type="xsd:int"/>
+					
+      <element name="penaltyPoints" nillable="true" type="xsd:int"/>
+					
+      <element default="false" name="counted" type="xsd:boolean"/>
+				
+    </sequence>
+			
+  </complexType>
+			
+  <element name="PointDto" nillable="true" type="tns1:PointDto"/>		
+			
+  <complexType name="PointListDto">
+		        
+    <sequence>
+		            
+      <element maxOccurs="unbounded" minOccurs="0" name="PointDto" nillable="true" type="tns1:PointDto"/>
+		        
+    </sequence>	
+			
+  </complexType>
+			
+  <element name="PointListDto" nillable="true" type="tns1:PointListDto"/>				
+		
+</schema>
+  </wsdl:types>
+  <wsdl:message name="syncEventRequest">
+    <wsdl:part element="impl:syncEvent" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="syncEventsResponse">
+    <wsdl:part element="impl:syncEventsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="authenticateRequest">
+    <wsdl:part element="impl:authenticate" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="syncEventResponse">
+    <wsdl:part element="impl:syncEventResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="syncChampionshipRequest">
+    <wsdl:part element="impl:syncChampionship" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="syncChampionshipResponse">
+    <wsdl:part element="impl:syncChampionshipResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCustomerListResponse">
+    <wsdl:part element="impl:getCustomerListResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAccountListRequest">
+    <wsdl:part element="impl:getAccountList" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="syncBookingsRequest">
+    <wsdl:part element="impl:syncBookings" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAccountListResponse">
+    <wsdl:part element="impl:getAccountListResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="syncSectionsRequest">
+    <wsdl:part element="impl:syncSections" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="syncSectionResponse">
+    <wsdl:part element="impl:syncSectionResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="syncSectionsResponse">
+    <wsdl:part element="impl:syncSectionsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="syncSectionRequest">
+    <wsdl:part element="impl:syncSection" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="authenticateResponse">
+    <wsdl:part element="impl:authenticateResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAccountResponse">
+    <wsdl:part element="impl:getAccountResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getSectionListResponse">
+    <wsdl:part element="impl:getSectionListResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAccountRequest">
+    <wsdl:part element="impl:getAccount" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getSectionListRequest">
+    <wsdl:part element="impl:getSectionList" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getEventListResponse">
+    <wsdl:part element="impl:getEventListResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="syncEventsRequest">
+    <wsdl:part element="impl:syncEvents" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="syncBookingsResponse">
+    <wsdl:part element="impl:syncBookingsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCustomerListRequest">
+    <wsdl:part element="impl:getCustomerList" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="syncBookingResponse">
+    <wsdl:part element="impl:syncBookingResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getEventListRequest">
+    <wsdl:part element="impl:getEventList" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="syncBookingRequest">
+    <wsdl:part element="impl:syncBooking" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="RemoteServicePortType">
+    <wsdl:operation name="authenticate">
+      <wsdl:input message="impl:authenticateRequest" name="authenticateRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:authenticateResponse" name="authenticateResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCustomerList">
+      <wsdl:input message="impl:getCustomerListRequest" name="getCustomerListRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:getCustomerListResponse" name="getCustomerListResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAccount">
+      <wsdl:input message="impl:getAccountRequest" name="getAccountRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:getAccountResponse" name="getAccountResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAccountList">
+      <wsdl:input message="impl:getAccountListRequest" name="getAccountListRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:getAccountListResponse" name="getAccountListResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getEventList">
+      <wsdl:input message="impl:getEventListRequest" name="getEventListRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:getEventListResponse" name="getEventListResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSectionList">
+      <wsdl:input message="impl:getSectionListRequest" name="getSectionListRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:getSectionListResponse" name="getSectionListResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="syncEvent">
+      <wsdl:input message="impl:syncEventRequest" name="syncEventRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:syncEventResponse" name="syncEventResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="syncBooking">
+      <wsdl:input message="impl:syncBookingRequest" name="syncBookingRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:syncBookingResponse" name="syncBookingResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="syncEvents">
+      <wsdl:input message="impl:syncEventsRequest" name="syncEventsRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:syncEventsResponse" name="syncEventsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="syncBookings">
+      <wsdl:input message="impl:syncBookingsRequest" name="syncBookingsRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:syncBookingsResponse" name="syncBookingsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="syncSection">
+      <wsdl:input message="impl:syncSectionRequest" name="syncSectionRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:syncSectionResponse" name="syncSectionResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="syncSections">
+      <wsdl:input message="impl:syncSectionsRequest" name="syncSectionsRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:syncSectionsResponse" name="syncSectionsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="syncChampionship">
+      <wsdl:input message="impl:syncChampionshipRequest" name="syncChampionshipRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:syncChampionshipResponse" name="syncChampionshipResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="RemoteServiceSOAPhttp" type="impl:RemoteServicePortType">
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="authenticate">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="authenticateRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="authenticateResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCustomerList">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getCustomerListRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getCustomerListResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAccount">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getAccountRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getAccountResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAccountList">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getAccountListRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getAccountListResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getEventList">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getEventListRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getEventListResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSectionList">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getSectionListRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getSectionListResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="syncEvent">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="syncEventRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="syncEventResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="syncBooking">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="syncBookingRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="syncBookingResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="syncEvents">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="syncEventsRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="syncEventsResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="syncBookings">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="syncBookingsRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="syncBookingsResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="syncSection">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="syncSectionRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="syncSectionResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="syncSections">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="syncSectionsRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="syncSectionsResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="syncChampionship">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="syncChampionshipRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="syncChampionshipResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RemoteService">
+    <wsdl:port binding="impl:RemoteServiceSOAPhttp" name="RemoteServicePort">
+      <wsdlsoap:address location="http://www.myrcm.ch/myrcm/service/RemoteServicePort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
