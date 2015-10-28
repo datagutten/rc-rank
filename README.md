@@ -11,6 +11,7 @@ The system is made to be international and to support multiple federations. All 
   - [SOAP](http://php.net/manual/en/book.soap.php)
   - [PDO](http://php.net/manual/en/book.pdo.php) with [MySQL](http://php.net/manual/en/ref.pdo-mysql.php) driver.
 * [MariaDB 10](https://mariadb.org/) or [MySQL](http://www.mysql.com/products/community/) (Other databases might work with the correct pdo driver, but is not tested)
+* [Apache](https://httpd.apache.org/) web server with [PHP module](http://php.net/manual/en/install.unix.apache2.php) (Any web server supporting PHP should work)
 
 ##Setup##
 The first you need to do is to create a config\_[your federation].php
