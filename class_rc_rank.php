@@ -44,7 +44,7 @@ class rc_rank
 		$confs=glob('config_*.php');
 		foreach($confs as $config)
 		{
-			if(preg_match($config_pattern='/config_([A-Za-z0-9_\-]+).php/',$config))
+			if($config!='config_sample.php' && preg_match($config_pattern='/config_([A-Za-z0-9_\-]+).php/',$config) )
 			{
 				$federation=preg_replace($config_pattern,'$1',$config);
 				$federations[]=$federation;
