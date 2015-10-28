@@ -1,4 +1,0 @@
-setup.php creates the SQL tables at first setup
-load_events.php load events and sections from MyRCM and writes them to the tables events and sections
-section_mapping.php connects the events and sections the right championship and writes them to table championships
-calculate_ponts.php load results from MyRCM, calculates points for each driver and each lap and writes them to table points
