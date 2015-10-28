@@ -24,7 +24,8 @@ Use *config_sample.php* and populate it with the following information:
 * Which championships to calculate points for
 * Words in the section names which indicates that they not should be counted
 
-When the config is created you need to run *setup.php* to create the required table structure in the database.
+When the config is created you need to run *php setup.php [your federation]* on the command line to create the required table structure in the database.
+*setup.php* is the only script running on the command line, the other scripts are made to run in a web browser.
 
 ##Using the system##
 First you need to run *load\_events.php* to load events and sections from MyRCM. (Related SQL tables: *events* and *sections*).
