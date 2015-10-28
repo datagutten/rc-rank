@@ -41,10 +41,14 @@ The data available from MyRCM gives this system some weaknesses:
 * Due to the possibility to register for laps on MyRCM without creating an account there is no unique user id. This means that drivers in different laps are connected only by their full name, so it is impossible to distinguish between two drivers with identical names.
 * Different clubs use different naming of the laps which makes it difficult to identify which laps to count as what
 
+
+##Other##
 This system is not intended to be publicly available on the internet.
 You should run it on your internal server and copy the HTML for the ranking list to your website.
 
-The data fetching and calculations could be made as background jobs, but with the current data quality you would still need a manual job with connecting events before a correct ranking list could be produced. 
+The data fetching and calculations could be made as background jobs, but with the current data quality you would still need a manual job with connecting events before a correct ranking list could be produced.
+
+The WSDL for the MyRCM SOAP interface got a syntax error, so a fixed version is included in this repository. 
 
 ##Support##
 For support requests please use the GitHub issue system.
