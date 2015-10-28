@@ -36,6 +36,11 @@ Then you need to run *section\_mapping.php* to connect the events and sections t
 When the events and sections are correctly connected you can run *calculate\_points.php* to load the results from MyRCM and calculate points for each driver and lap. This information is written to the table *points*.
 
 If the above steps are correctly done you should be able to produce a correct ranking list using *championship_results.php*
+##Calculation##
+The drivers are assigned points for each lap based on their final finishing position using the [EFRA](http://news.efra.ws/fileadmin/documents/2011/03/Handb11General.pdf) GP2 table.
+Then their ranking is calculated by summing the points for their laps, excluding their worst lap. If they have run three or fewer laps the points for all of their laps are summed.
+
+This is based on the Norwegian (NMF) rules, but if others got different rules, please open an issue so I can implement that too.
 
 ##Weaknesses##
 The data available from MyRCM gives this system some weaknesses:
@@ -54,3 +59,6 @@ The WSDL for the MyRCM SOAP interface got a syntax error, so a fixed version is 
 
 ##Support##
 For support requests please use the GitHub issue system.
+
+##Contributing##
+The project is licensed under GNU General Public License v2.0 and you are welcome to [fork](https://help.github.com/articles/fork-a-repo/) the repository and send me a pull request with your changes.
