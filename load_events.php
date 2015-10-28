@@ -95,6 +95,7 @@ else
 				}
 			}
 		}
+		echo '<a href="section_mapping.php?federation={$rc_rank->federation}">'._('Events loaded. Now you can connect the events and sections to their correct classes.').'</a>';
 	}
 }
 ?>
