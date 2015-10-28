@@ -5,6 +5,7 @@ $config['db_password']='yourpassword';
 $config['db_name']='rc-rank';
 $config['federation']='yourfederation';
 $config['outdoor_start_week']=15;
+$config['outdoor_end_week']=40;
 $config['LizISOCode']='NO';
 $config['SOAP_user']='rcm_user';
 $config['SOAP_password']='rcm_password';
