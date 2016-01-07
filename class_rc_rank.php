@@ -132,10 +132,10 @@ class rc_rank
 		return $this->query(sprintf('SELECT distinct championship FROM championships_%s WHERE year=%s',$this->federation,$this->db->quote($year)),'all_column');
 	}
 
-	function championship_events($championship,$class) //Get events in a championship
+	function championship_events($championship,$year,$class) //Get events in a championship
 	{
-		$q=sprintf('SELECT * FROM championships_%s WHERE championship=%s AND class=%s ORDER BY round',$this->federation,$this->db->quote($championship),$this->db->quote($class));
-		return $this->query($q,'all');
+		$st_championship_events=$this->db->prepare(sprintf('SELECT * FROM championships_%s WHERE championship=? AND year=? AND class=? ORDER BY round',$this->federation));
+		return $this->execute($st_championship_events,array($championship,$year,$class),'all');
 	}
 
 	function championship_classes($championship,$year=false) //Get classes run in a championship a given year
