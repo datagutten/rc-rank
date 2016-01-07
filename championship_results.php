@@ -32,16 +32,16 @@ foreach($_GET as $key=>$value)
 $filename=basename(__FILE__);
 if(!isset($_GET['federation']))
 	echo selector(_('Select federation'),$rc_rank->get_federations(),$filename,'federation');
+elseif(!isset($_GET['year']))
+	echo selector(_('Select year'),range(date('Y')-1,date('Y')+1),$filename,'year');
 elseif(!isset($_GET['championship']))
 {
-	$championships=$rc_rank->championships();
+	$championships=$rc_rank->championships($_GET['year']);
 	if(empty($championships))
 		echo sprintf(_('No championships found, run %s'),sprintf('<a href="section_mapping.php?federation=%s">section_mapping.php</a>',$rc_rank->federation));
 	else
 		echo selector(_('Select championship'),$championships,$filename,'championship');
 }
-elseif(!isset($_GET['year']))
-	echo selector(_('Select year'),$rc_rank->query(sprintf('SELECT DISTINCT year FROM championships_%s WHERE championship=%s',$federation,$parameters_quoted['championship']),'all_column'),$filename,'year');
 elseif(!isset($_GET['class']))
 {
 	//Get classes run in current championship current year
@@ -99,8 +99,13 @@ else
 			}
 			sort($points_driver);
 			//print_r($points_driver);
-			if(count($points_driver)>3) //Keep only the best rounds (if more than 3 run)
-				unset($points_driver[0]);
+			
+			//Check if all rounds should be counted for the current championship and class
+			if(!isset($rc_rank->count_all_rounds[$_GET['championship']]) || array_search($_GET['class'],$rc_rank->count_all_rounds[$_GET['championship']])===false)
+			{
+				if(count($points_driver)>3/* ----Add exception for 1:8 off road ----*/ ) //Keep only the best rounds (if more than 3 run)
+					unset($points_driver[0]);
+			}
 			$dom->createElement_simple('td',$tr_driver[$key],array('class'=>'sum'),$sum=array_sum($points_driver)); //Sum drivers points
 			$scores[$key]=$sum;
 		}

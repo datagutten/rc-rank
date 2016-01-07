@@ -25,7 +25,8 @@ if(isset($_GET['federation']))
 	$federation=$_GET['federation'];
 	$rc_rank->init($federation);
 }
-$_GET['year']=date('Y');
+if(!isset($_GET['year']))
+	$_GET['year']=date('Y');
 function select($name,$options,$parent=false,$selected=false)
 {
 	global $dom;
@@ -70,7 +71,7 @@ else
 	$form=$dom->createElement_simple('form',false,array('method'=>'POST'));
 	$table=$dom->createElement_simple('table',$form,array('border'=>'1'));
 	
-	$events=$rc_rank->getEventList($type);
+	$events=$rc_rank->getEventList($type,$_GET['year']);
 	//print_r($events);
 	$championship=$_GET['championship'];
 
@@ -78,7 +79,7 @@ else
 		echo sprintf('<span class="error">%s</span>',$rc_rank->error);
 	elseif(empty($events))
 		echo sprintf('<span class="warning">%s</span>',_('No events found'));
-	$events_sorted=$process->sort_events($events,$rc_rank->championship_names);
+	$events_sorted=$process->sort_events($events,$rc_rank->championship_names,$_GET['year']);
 	if($events_sorted===false)
 		echo sprintf('<p><span class="warning">%s</span></p>',$process->error);
 	elseif(!isset($events_sorted[$championship]))
