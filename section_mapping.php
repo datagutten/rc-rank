@@ -134,9 +134,9 @@ else
 				$input->setAttribute('value',$round_number[1]);
 		
 			//preg_match('/(1:[0-9]+)/',$event['eventName'],$scale);
-			if(isset($config['outdoor_start_week']))
+			if(!empty($rc_rank->outdoor_season))
 			{
-				if($week<$config['outdoor_start_week'])
+				if($week<$rc_rank->outdoor_season['start'] || $week>$rc_rank->outdoor_season['end'])
 					$classes=$classes_in;
 				else
 					$classes=$classes_out;

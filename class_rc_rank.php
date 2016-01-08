@@ -11,6 +11,7 @@ class rc_rank
 	public $counted_championships=false;
 	public $words_not_counting=false;
 	public $count_all_rounds=false; //Championships and classes where all rounds should be counted
+	public $outdoor_season; //Outdoor season start and end week
 	public $federations=false;
 	public $lang='en';
 
@@ -39,6 +40,8 @@ class rc_rank
 		$this->words_not_counting=$config['words_not_counting'];
 		if(isset($config['count_all_rounds']))
 			$this->count_all_rounds=$config['count_all_rounds'];
+		if(isset($config['outdoor_start_week']) && isset($config['outdoor_end_week']))
+			$this->outdoor_season=array('start'=>$config['outdoor_start_week'],'end'=>$config['outdoor_end_week']);
 		
 		$this->db=new PDO("mysql:host={$this->config['db_host']};dbname={$this->config['db_name']}",$this->config['db_user'],$this->config['db_password'],array(PDO::ATTR_PERSISTENT => true));
 	}
