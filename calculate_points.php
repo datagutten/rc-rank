@@ -1,3 +1,8 @@
+<?Php
+//Get results from MyRCM, calculate points for each event and write to DB
+if(!isset($rc_rank)) //Script is called directly and is not included
+{
+	?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -6,21 +11,16 @@
 </head>
 
 <body>
-<?php
-//Calculate points for each event and write to DB
-require 'class_rc_rank.php';
-
-$rc_rank=new rc_rank;
-$rc_rank->debug=true;
-
+	<?php 
+    
+    require 'class_rc_rank.php';
+    $rc_rank=new rc_rank;
+    $rc_rank->debug=true;
+    require 'selector.php';
+}
 
 require 'class_MyRCM.php';
 $MyRCM=new MyRCM;
-
-require 'tools/DOMDocument_createElement_simple.php';
-$dom=new DOMDocumentCustom;
-$dom->formatOutput=true;
-require 'selector.php';
 
 $options=getopt('',array('championship:','class:'));
 $filename=basename(__FILE__);
