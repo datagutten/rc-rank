@@ -97,7 +97,7 @@ else
 			$previous_name=$driver['name'];
 		}
 		//print_r($results);
-
+}
 ?>
 
 </body>
