@@ -58,11 +58,15 @@ else
 			die($rc_rank->error);
 
 		$st_insert_info=$rc_rank->db->prepare(sprintf('INSERT INTO championship_results_%s (FirstName,LastName,championship,year,class,points,last_round,place_last_round) VALUES (?,?,?,?,?,?,?,?)',$rc_rank->federation));
-		while($driver=$st_select_drivers->fetch(PDO::FETCH_ASSOC))
-		{	
+	$rowcount=$st_select_drivers->rowCount();
+	for($i=1; $i<=$rowcount+1; $i++)
+	{
+			if($i<=$rowcount)
+				$driver=$st_select_drivers->fetch(PDO::FETCH_ASSOC);
 			$results[$driver['name']][$driver['round']]=$driver;
+			
 			//SQL sorting makes all rounds of each driver after each other. When a different driver is found, total points for the previous driver can be calculated
-			if(isset($previous_name) && $driver['name']!=$previous_name)
+			if((isset($previous_name) && $driver['name']!=$previous_name) || $i>$rowcount)
 			{
 				/*if(count($results[$previous_name])>1)
 				{
@@ -95,8 +99,8 @@ else
 				
 			}
 			$previous_name=$driver['name'];
-		}
-		//print_r($results);
+	}
+
 }
 ?>
 
