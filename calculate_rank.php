@@ -41,7 +41,6 @@ elseif(!isset($_GET['class']))
 	echo selector(_('Select class'),$rc_rank->championship_classes($_GET['championship'],$_GET['year']),$filename,'class');
 else
 {
-	$number_of_rounds=$rc_rank->number_of_rounds($parameters['championship'],$parameters['year'],$parameters['class']);
 	$st_select_drivers=$rc_rank->db->prepare($q=sprintf('	SELECT points_%1$s.*,CONCAT(FirstName, " ", LastName) AS name,championships_%1$s.round 
 														FROM points_%1$s,championships_%1$s 
 														WHERE points_%1$s.sectionKey=championships_%1$s.sectionKey
