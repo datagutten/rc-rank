@@ -89,12 +89,14 @@ else
 				}
 
 				$last_round=end($results[$previous_name]);
-				$result=$rc_rank->execute($st_insert_info,array($last_round['FirstName'],$last_round['LastName'],$last_round['Championship'],$last_round['Year'],$last_round['Class'],array_sum($points_driver),$last_round['round'],$last_round['Rank']),false);
+				$result=$rc_rank->execute($st_insert_info,array($last_round['FirstName'],$last_round['LastName'],$last_round['Championship'],$last_round['Year'],$last_round['Class'],$points=array_sum($points_driver),$last_round['round'],$last_round['Rank']),false);
 				if($result===false)
 				{
 					echo $rc_rank->error."<br />\n";
 					break;
 				}
+				else
+					echo sprintf("%s %s: %s %s<br />\n",$last_round['FirstName'],$last_round['LastName'],$points,ngettext('point','points',$points));
 				
 			}
 			$previous_name=$driver['name'];
