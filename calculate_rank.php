@@ -41,6 +41,7 @@ elseif(!isset($_GET['class']))
 	echo selector(_('Select class'),$rc_rank->championship_classes($_GET['championship'],$_GET['year']),$filename,'class');
 else
 {
+	//Get all drivers in selected championship
 	$st_select_drivers=$rc_rank->db->prepare($q=sprintf('	SELECT points_%1$s.*,CONCAT(FirstName, " ", LastName) AS name,championships_%1$s.round 
 														FROM points_%1$s,championships_%1$s 
 														WHERE points_%1$s.sectionKey=championships_%1$s.sectionKey
@@ -49,15 +50,9 @@ else
 														AND points_%1$s.class=? 
 														ORDER BY name,round',$rc_rank->federation));
 
+	require 'calculate_points.php';
 	$rc_rank->execute($st_select_drivers,array($parameters['championship'],$parameters['year'],$parameters['class']),false);
-	//$drivers=$rc_rank->query(sprintf('SELECT points_%1$s.*,CONCAT(FirstName, " ", LastName),championships_%1$s.round AS name FROM points_%1$s,championships_%1$s WHERE points_%1$s.sectionKey=championships_NMF.sectionKey championship=%s AND class=%s GROUP BY FirstName,LastName',$federation,$parameters_quoted['championship'],$parameters_quoted['class']),'all'); //Get all drivers in selected championship
-	if($st_select_drivers->rowCount()==0)
-	{
-		//echo sprintf(_('No results for %s, run %s'),$_GET['class'],sprintf('<a href="calculate_points.php?federation=%s&championship=%s&class=%s">%s</a>',$_GET['federation'],$_GET['championship'],$_GET['class'],'calculate_points.php'));
-		require 'calculate_points.php';
-	}
-	else
-	{
+
 		$st=$rc_rank->query(sprintf('DELETE FROM championship_results_%s WHERE championship=%s AND year=%s AND class=%s',$rc_rank->federation,$parameters_quoted['championship'],$parameters_quoted['year'],$parameters_quoted['class']),false);
 		if($st===false)
 			die($rc_rank->error);
@@ -102,10 +97,7 @@ else
 			$previous_name=$driver['name'];
 		}
 		//print_r($results);
-	}
 
-
-}
 ?>
 
 </body>
