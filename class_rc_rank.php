@@ -43,7 +43,7 @@ class rc_rank
 		if(isset($config['outdoor_start_week']) && isset($config['outdoor_end_week']))
 			$this->outdoor_season=array('start'=>$config['outdoor_start_week'],'end'=>$config['outdoor_end_week']);
 		
-		$this->db=new PDO("mysql:host={$this->config['db_host']};dbname={$this->config['db_name']}",$this->config['db_user'],$this->config['db_password'],array(PDO::ATTR_PERSISTENT => true));
+		$this->db=new PDO("mysql:host={$this->config['db_host']};dbname={$this->config['db_name']};charset=utf8",$this->config['db_user'],$this->config['db_password'],array(PDO::ATTR_PERSISTENT => true));
 	}
 	function get_federations() //Get valid federations
 	{
