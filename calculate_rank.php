@@ -53,11 +53,9 @@ else
 	require 'calculate_points.php';
 	$rc_rank->execute($st_select_drivers,array($parameters['championship'],$parameters['year'],$parameters['class']),false);
 
-		$st=$rc_rank->query(sprintf('DELETE FROM championship_results_%s WHERE championship=%s AND year=%s AND class=%s',$rc_rank->federation,$parameters_quoted['championship'],$parameters_quoted['year'],$parameters_quoted['class']),false);
-		if($st===false)
-			die($rc_rank->error);
+	$st=$rc_rank->query(sprintf('DELETE FROM championship_results_%s WHERE championship=%s AND year=%s AND class=%s',$rc_rank->federation,$parameters_quoted['championship'],$parameters_quoted['year'],$parameters_quoted['class']),false);
 
-		$st_insert_info=$rc_rank->db->prepare(sprintf('INSERT INTO championship_results_%s (FirstName,LastName,championship,year,class,points,last_round,place_last_round) VALUES (?,?,?,?,?,?,?,?)',$rc_rank->federation));
+	$st_insert_info=$rc_rank->db->prepare(sprintf('INSERT INTO championship_results_%s (FirstName,LastName,championship,year,class,points,last_round,place_last_round) VALUES (?,?,?,?,?,?,?,?)',$rc_rank->federation));
 	$rowcount=$st_select_drivers->rowCount();
 	for($i=1; $i<=$rowcount+1; $i++)
 	{
@@ -68,13 +66,6 @@ else
 			//SQL sorting makes all rounds of each driver after each other. When a different driver is found, total points for the previous driver can be calculated
 			if((isset($previous_name) && $driver['name']!=$previous_name) || $i>$rowcount)
 			{
-				/*if(count($results[$previous_name])>1)
-				{
-				print_r($results[$previous_name]);
-				print_r(array_column($results[$previous_name],'Points'));
-				break;
-				}*/
-				//print_r($results[$previous_name]);
 				$points_driver=array_column($results[$previous_name],'Points');
 
 				//Check if all rounds should be counted for the current championship and class
