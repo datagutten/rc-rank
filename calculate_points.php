@@ -43,9 +43,17 @@ else
 	elseif(empty($events))
 		echo sprintf(_('No events for %s'),$_GET['class']);
 	else
-	{	
+	{
 		echo '<h3>'.sprintf(_('Calculating points for %s %s %s'),$_GET['federation'],$_GET['championship'],$_GET['class']).'</h3>';
 		//$table=$dom->createElement_simple('table',false,array('border'=>'1'));
+		if(isset($_GET['recalculate']))
+		{
+			$st_delete=$rc_rank->db->prepare(sprintf('DELETE FROM points_%s WHERE Championship=? AND Year=? AND Class=?',$rc_rank->federation));
+			$rc_rank->execute($st_delete,array($_GET['championship'],$_GET['year'],$_GET['class']),false);
+			echo '<p>'._('Recalculating points').'</p>';
+		}
+		else
+			echo sprintf('<a href="?%s">%s</a>',http_build_query(array_merge($_GET,array('recalculate'=>'true'))),_('Recalculate points'));
 		$st_insert=$rc_rank->db->prepare(sprintf('INSERT INTO points_%s (id,sectionKey,eventKey,Rank,PilotKey,FirstName,LastName,License,LicenseAddOn,LicenseISOCode,Licenser,AgeGroup,Country,Points,Championship,Year,Class) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',$rc_rank->federation));
 		$id_indb=$rc_rank->query(sprintf('SELECT id FROM points_%s',$rc_rank->federation),'all_column');
 		foreach($events as $event)
