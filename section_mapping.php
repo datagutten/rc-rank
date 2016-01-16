@@ -12,6 +12,7 @@
 
 <body>
 <?php
+//Connects MyRCM events and sections (read from events table in DB) to championship rounds and classes and writes it to championships table in DB
 require 'tools/DOMDocument_createElement_simple.php';
 $dom=new DOMDocumentCustom;
 $dom->formatOutput=true;
@@ -104,9 +105,9 @@ else
 				{
 					if(empty($_POST['round_number'][$eventKey]) || $class=='0')
 						continue;
-					if(!is_numeric($_GET['year']))
-						echo sprintf(_('Invalid year: %s'),$_GET['year']);
-					$st_insert->execute(array($sectionKey,$eventKey,$championship,$_GET['year'],$_POST['round_number'][$eventKey],$class));
+					if(!is_numeric($_POST['year'][$eventKey]))
+						echo sprintf(_('Invalid year: %s'),$_POST['year'][$eventKey]);
+					$st_insert->execute(array($sectionKey,$eventKey,$championship,$_POST['year'][$eventKey],$_POST['round_number'][$eventKey],$class));
 				}
 			}
 		}
@@ -117,7 +118,7 @@ else
 		{
 			$event=(object)$event;
 			$tr_event=$dom->createElement_simple('tr',$table);
-			$td=$dom->createElement_simple('td',$tr_event,array('class'=>'event'),$event->eventName);
+			$td=$dom->createElement_simple('td',$tr_event,array('class'=>'event','rowspan'=>'2'),$event->eventName);
 			$dom->createElement_simple('br',$td);
 			$week=date('W',strtotime($event->startDate)); //Event week
 			$text=$dom->createTextNode(sprintf('%.10s-%.10s (%s: %d)',$event->startDate,$event->endDate,_('Week'),$week)); //Start and end date
@@ -125,13 +126,24 @@ else
 			$dom->createElement_simple('br',$td);
 			$text=$dom->createTextNode($event->hostName);
 			$td->appendChild($text);
-		
+
 			$td=$dom->createElement_simple('td',$tr_event);
 			$round_number_name=sprintf('round_number[%d]',$event->primaryKey);
 			$dom->createElement_simple('label',$td,array('for'=>$round_number_name),_('Round number:'));
-			$input=$dom->createElement_simple('input',$td,array('type'=>'text','size'=>'2','name'=>$round_number_name,'id'=>$round_number_name));
+			$input_round=$dom->createElement_simple('input',$td,array('type'=>'text','size'=>'2','name'=>$round_number_name,'id'=>$round_number_name));
+
 			if(preg_match('/'.$championship.'.{0,2}([0-9]+) /',$event->eventName,$round_number))
-				$input->setAttribute('value',$round_number[1]);
+				$input_round->setAttribute('value',$round_number[1]);
+			
+			if($week<$rc_rank->outdoor_season['start']) //Indoor season before outdoor season is a part of previous years season
+				$year=$_GET['year']-1;
+			else
+				$year=$_GET['year'];
+			
+			$tr_year=$dom->createElement_simple('tr',$table);
+			$td_year=$dom->createElement_simple('td',$tr_year,array('class'=>'year'),_('Year').': ');
+			$input_year=$dom->createElement_simple('input',$td_year,array('type'=>'text','size'=>'4','name'=>sprintf('year[%d]',$event->primaryKey),'value'=>$year));
+			
 		
 			//preg_match('/(1:[0-9]+)/',$event['eventName'],$scale);
 			if(!empty($rc_rank->outdoor_season))
@@ -174,7 +186,10 @@ else
 				select(sprintf('class[%d][%d]',$event->primaryKey,$section->primaryKey),$classes,$td,$key); //Select list for class
 			}
 			if(!isset($tr_section))
+			{
 				$table->removeChild($tr_event);
+				$table->removeChild($tr_year);
+			}
 			else
 				unset($tr_section);
 		}
