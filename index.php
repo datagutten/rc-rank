@@ -25,7 +25,7 @@ else
 	$dom->createElement_simple('h2',$body,false,_('This is a tool to calculate points and ranks for RC championships'));
 	$dom->createElement_simple('p',$body,false,_('Run these scripts in the order listed to get and process the data to get correct and complete ranking lists'));
 	
-	$scripts=array('load_events.php'=>_('Load events from MyRCM'),'section_mapping.php'=>_('Connect MyRCM events and sections to their correct classes'),'calculate_points.php'=>_('Calculate points'));
+	$scripts=array('load_events.php'=>_('Load events from MyRCM'),'section_mapping.php'=>_('Connect MyRCM events and sections to their correct classes'),'calculate_rank.php'=>_('Calculate points'));
 	$list=$dom->createElement_simple('ol',$body);
 	foreach($scripts as $url=>$text)
 	{
