@@ -39,12 +39,13 @@ else
 	$process=new MyRCM_process;
 
 	$events=$MyRCM->getEventList('ALL');
+
 	if($events===false)
 		echo $MyRCM->error;
 	else
 	{
 		$events_raw=$events->eventListDto->EventDto;
-		$events_sorted=$process->sort_events($events_raw,$rc_rank->championship_names,date('Y'));
+		$events_sorted=$process->sort_events($events_raw,$rc_rank->championship_names,$_GET['year']);
 		
 		
 		$event_primaryKey_indb=$rc_rank->query(sprintf('SELECT primaryKey FROM events_%s',$rc_rank->federation),'all_column');
@@ -65,10 +66,24 @@ else
 		`youthAge`,
 		`seniorAge`,
 		`eventKey`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',$rc_rank->federation));
+		//print_r($events_sorted);
 		foreach($events_sorted as $championship=>$types)
 		{
 			if(array_search($championship,$rc_rank->counted_championships)===false)
+			{
+				echo "Skip\n";
+				foreach($types as $type=>$events)
+				{
+					echo "Type: $type<br />\n";
+					foreach($events as $event)
+					{
+						if($event['eventName']=='Online Event')
+							continue;
+						echo $event['eventName'].'/'.$event['hostName'].' '.$event['primaryKey']."<br />\n";
+					}
+				}
 				continue;
+			}
 			foreach($types as $type=>$events)
 			{
 				echo "<strong>$championship $type</strong><br >\n";
@@ -78,10 +93,10 @@ else
 					{
 						$params=array($event['primaryKey'],$event['externalKey'],$event['customerKey'],$event['eventName'],$event['hostName'],$event['block'],$event['startDate'],$event['endDate'],$event['eventType'],$event['subDirectory'],$event['openRegistrationDate'],$event['closeRegistrationDate'],$event['notification'],$championship);
 						$rc_rank->execute($st_insert_event,$params);
-						echo sprintf(_('Event %s was inserted into table events_%s'),$event['eventName'],$rc_rank->federation)."<br />\n";
+						echo sprintf(_('Event %s (%s) was inserted into table events_%s'),$event['eventName'],$event['primaryKey'],$rc_rank->federation)."<br />\n";
 					}
 					else
-						echo sprintf(_('Event %s exists in table events_%s'),$event['eventName'],$rc_rank->federation)."<br />\n";
+						echo sprintf(_('Event %s (%s) exists in table events_%s'),$event['eventName'],$event['primaryKey'],$rc_rank->federation)."<br />\n";
 					
 					$sections=$MyRCM->getSectionList($event['primaryKey']);
 					foreach($sections as $section) //Write sections to DB
