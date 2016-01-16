@@ -5,8 +5,8 @@ class MyRCM_process
 	public $error;
 	function sort_events($events,$cups=false,$year=false)
 	{
-		if($year===false)
-			$year=date('Y');
+		if(!is_numeric($year))
+			trigger_error("Invalid year",E_USER_ERROR);
 		if(!is_array($cups))
 			trigger_error("Invalid value for cups",E_USER_ERROR);
 		if(!is_array($events))
@@ -18,8 +18,6 @@ class MyRCM_process
 		{
 			$event=(array)$event;
 			if(substr($event['startDate'],0,4)!=$year)
-				continue;
-			if(stripos($event['eventName'],'Klubbløp')!==false)
 				continue;
 			//echo $event['eventName']."\n";
 			foreach($cups as $key=>$names)
