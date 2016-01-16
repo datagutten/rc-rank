@@ -52,6 +52,7 @@ else
 {
 	$header=$_GET['federation'].' '.$_GET['championship'].' '.$_GET['class'].' '.$_GET['year'];
 	echo '<h3>'.$header.'</h3>'; //Header text
+	
 	//Get the results created by calculate_rank.php
 	$st_results=$rc_rank->query(sprintf('	SELECT *,CONCAT(FirstName, " ", LastName) AS name
 											FROM championship_results_%s 
@@ -60,9 +61,7 @@ else
 											AND class=%s 
 											ORDER BY points DESC, last_round DESC, place_last_round DESC'
 											,$rc_rank->federation,$parameters_quoted['championship'],$parameters_quoted['year'],$parameters_quoted['class']),false);
-	if($st_results->rowCount()==0)
-		echo sprintf(_('No results for %s, run %s'),$_GET['class'],sprintf('<a href="calculate_rank.php?federation=%s&championship=%s&year=%s&class=%s">%s</a>',$_GET['federation'],$_GET['championship'],$_GET['year'],$_GET['class'],'calculate_rank.php'));
-	else
+	if($st_results->rowCount()>0)
 	{
 		$rounds_info=$rc_rank->query(sprintf('SELECT * FROM championships_%s WHERE year=%s AND championship=%s AND class=%s ORDER BY round',$rc_rank->federation,$parameters_quoted['year'],$parameters_quoted['championship'],$parameters_quoted['class']),'all');
 		$st_points_round=$rc_rank->db->prepare(sprintf('SELECT *,CONCAT(FirstName, " ", LastName) AS name FROM points_%s WHERE sectionKey=?',$rc_rank->federation));
@@ -109,15 +108,14 @@ else
 		}
 
 		echo $html=$dom->saveXML($table);
-		file_put_contents(str_replace(':','-',$header).'.htm',$html);
+		file_put_contents('rankinglists/'.str_replace(':','-',$header).'.htm',$html);
 	}
 	$links=$dom->createElement('ul');
-	//$dom->createElement_simple('a',$links,array('href'=>sprintf('<a href="section_mapping.php?federation=%s&championship=%s&year=%s">section_mappings.php</a>',$_GET['federation'],$_GET['championship'],$_GET['year']),'section_mapping.php'));
 
-	$url=sprintf('calculate_points.php?federation=%s&championship=%s&year=%s&class=%s',$_GET['federation'],$_GET['championship'],$_GET['year'],$_GET['class']);
+	$url=sprintf('calculate_rank.php?federation=%s&championship=%s&year=%s&class=%s',$_GET['federation'],$_GET['championship'],$_GET['year'],$_GET['class']);
 	$li=$dom->createElement_simple('li',$links,false,_('Missing results? '));
 	$dom->createElement_simple('a',$li,array('href'=>$url),_('Calculate points'));
-	$url=sprintf('section_mapping.php?federation=%s&championship=%s&year=%s',$_GET['federation'],$_GET['championship'],$_GET['year']);
+	$url=sprintf('section_mapping.php?federation=%s&championship=%s&year=%s&type=%s',$_GET['federation'],$_GET['championship'],$_GET['year'],strtoupper(substr($_GET['class'],0,strpos($_GET['class'],'_'))));
 	$li=$dom->createElement_simple('li',$links,false,_('Missing events? '));
 	$dom->createElement_simple('a',$li,array('href'=>$url),_('Map events'));
 	
