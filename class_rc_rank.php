@@ -163,4 +163,10 @@ class rc_rank
 		ORDER BY classes_%1$s.name',$this->federation,$this->db->quote($championship),$year);
 		return $this->query($q,'key_pair');
 	}
+	//Number of rounds in a championship
+	function number_of_rounds($championship,$year,$class)
+	{
+		$st=$this->db->prepare($q=sprintf('SELECT max(round) FROM championships_%s WHERE class=? AND championship=? AND year=?',$this->federation));
+		return $this->execute($st,array($class,$championship,$year),'single');
+	}
 }

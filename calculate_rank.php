@@ -50,7 +50,9 @@ else
 														AND points_%1$s.class=? 
 														ORDER BY name,round',$rc_rank->federation));
 
+	$number_of_rounds=$rc_rank->number_of_rounds($parameters['championship'],$parameters['year'],$parameters['class']);
 	require 'calculate_points.php';
+	//Get number of rounds driven in the selected championship
 	$rc_rank->execute($st_select_drivers,array($parameters['championship'],$parameters['year'],$parameters['class']),false);
 
 	$st=$rc_rank->query(sprintf('DELETE FROM championship_results_%s WHERE championship=%s AND year=%s AND class=%s',$rc_rank->federation,$parameters_quoted['championship'],$parameters_quoted['year'],$parameters_quoted['class']),false);
@@ -71,7 +73,8 @@ else
 				//Check if all rounds should be counted for the current championship and class
 				if(!isset($rc_rank->count_all_rounds[$parameters['championship']]) || array_search($parameters['class'],$rc_rank->count_all_rounds[$parameters['championship']])===false)
 				{
-					if(count($points_driver)>3) //Keep only the best rounds (if more than 3 run)
+					//Keep only the best rounds if the driver has been in all rounds of a championship
+					if($number_of_rounds>3 && count($points_driver)==$number_of_rounds)
 					{
 						sort($points_driver); //Sort the drivers points in reverse order
 						unset($points_driver[0]); //Remove the worst round
