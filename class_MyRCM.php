@@ -23,7 +23,7 @@ class MyRCM
 		$return=$this->soap->__soapCall($function_name,array(array_merge(array('authorization'=>$this->auth),$arguments)));
 		$return=reset($return);
 
-		if($return->code=='ERROR')
+		if($return->code=='ERROR' || $return->code=='FAILED')
 		{
 			$this->error=$return->message;
 			return false;
