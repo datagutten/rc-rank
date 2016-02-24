@@ -26,8 +26,11 @@ if(isset($_GET['federation']))
 	$federation=$_GET['federation'];
 	$rc_rank->init($federation);
 }
-if(!isset($_GET['year']))
+if(!isset($_GET['year']) || !is_numeric($_GET['year']))
 	$_GET['year']=date('Y');
+else
+	$year=$_GET['year'];
+
 function select($name,$options,$parent=false,$selected=false)
 {
 	global $dom;
@@ -134,20 +137,12 @@ else
 
 			if(preg_match('/'.$championship.'.{0,2}([0-9]+) /',$event->eventName,$round_number))
 				$input_round->setAttribute('value',$round_number[1]);
-			
-			if($week<$rc_rank->outdoor_season['start']) //Indoor season before outdoor season is a part of previous years season
-				$year=$_GET['year']-1;
-			else
-				$year=$_GET['year'];
-			
-			$tr_year=$dom->createElement_simple('tr',$table);
-			$td_year=$dom->createElement_simple('td',$tr_year,array('class'=>'year'),_('Year').': ');
-			$input_year=$dom->createElement_simple('input',$td_year,array('type'=>'text','size'=>'4','name'=>sprintf('year[%d]',$event->primaryKey),'value'=>$year));
-			
-		
+
 			//preg_match('/(1:[0-9]+)/',$event['eventName'],$scale);
 			if(!empty($rc_rank->outdoor_season))
 			{
+				if($week<$rc_rank->outdoor_season['start']) //Indoor season before outdoor season is a part of previous years season
+					$year=$year-1;
 				if($week<$rc_rank->outdoor_season['start'] || $week>$rc_rank->outdoor_season['end'])
 					$classes=$classes_in;
 				else
@@ -155,7 +150,12 @@ else
 			}
 			else
 				$classes=array_merge($classes_in,$classes_out);
+
 			$classes=array_merge($classes_header,$classes); //Prepend the header items to the class list
+
+			$tr_year=$dom->createElement_simple('tr',$table);
+			$td_year=$dom->createElement_simple('td',$tr_year,array('class'=>'year'),_('Year').': ');
+			$input_year=$dom->createElement_simple('input',$td_year,array('type'=>'text','size'=>'4','name'=>sprintf('year[%d]',$event->primaryKey),'value'=>$year));
 
 			$sections=$rc_rank->getSectionList($event->primaryKey);
 	
