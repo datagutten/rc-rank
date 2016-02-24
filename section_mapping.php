@@ -124,7 +124,7 @@ else
 			$text=$dom->createTextNode(sprintf('%.10s-%.10s (%s: %d)',$event->startDate,$event->endDate,_('Week'),$week)); //Start and end date
 			$td->appendChild($text);
 			$dom->createElement_simple('br',$td);
-			$text=$dom->createTextNode($event->hostName);
+			$text=$dom->createTextNode(sprintf(_('Host: %s ID: %d'),$event->hostName,$event->primaryKey));
 			$td->appendChild($text);
 
 			$td=$dom->createElement_simple('td',$tr_event);
