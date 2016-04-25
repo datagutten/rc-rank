@@ -94,6 +94,8 @@ class rc_rank
 			return $st->fetch(PDO::FETCH_COLUMN);
 		elseif($fetch=='all')
 			return $st->fetchAll(PDO::FETCH_ASSOC);
+		elseif($fetch=='key_pair')
+			return $st->fetchAll(PDO::FETCH_KEY_PAIR);
 	}
 	function getEventList($eventType=false,$year=false)
 	{
@@ -149,7 +151,14 @@ class rc_rank
 			return false;
 		}
 		if($year===false)
-			$year=date('Y');
+		{
+			$st=$this->db->prepare($q=sprintf('SELECT classes_%1$s.id,classes_%1$s.name FROM championships_%1$s,classes_%1$s
+		WHERE championships_%1$s.class=classes_%1$s.id 
+		AND championships_%1$s.championship=? 
+		GROUP BY championships_%1$s.class 
+		ORDER BY classes_%1$s.name',$this->federation));
+			return $this->execute($st,array($championship),'key_pair');
+		}
 		if(!is_numeric($year))
 		{
 			$this->error=sprintf(_('Invalid year: %s'),$year);

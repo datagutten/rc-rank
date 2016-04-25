@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>Championship results</title>
+<script src="selector.js"></script>
 </head>
 
 <body>
@@ -32,7 +33,15 @@ foreach($_GET as $key=>$value)
 $filename=basename(__FILE__);
 if(!isset($_GET['federation']))
 	echo selector(_('Select federation'),$rc_rank->get_federations(),$filename,'federation');
-elseif(!isset($_GET['year']))
+else
+{
+	$rc_rank->init($_GET['federation']);
+	$form=$dom->createElement_simple('form',false,array('method'=>'get'));
+	$dom->createElement_simple('input',$form,array('type'=>'hidden','value'=>$rc_rank->federation,'name'=>'federation','id'=>'federation'));
+	$dom->createElement_simple('script',$form,false,"add_selector('year','','championship')");
+	echo $dom->saveXML($form);
+}
+/*elseif(!isset($_GET['year']))
 	echo selector(_('Select year'),range(date('Y')-1,date('Y')+1),$filename,'year');
 elseif(!isset($_GET['championship']))
 {
@@ -47,10 +56,12 @@ elseif(!isset($_GET['class']))
 	//Get classes run in current championship current year
 	$classes=$rc_rank->championship_classes($_GET['championship'],$_GET['year']);
 	echo selector(_('Select class'),$classes,'championship_results.php','class');
-}
-else
+}*/
+if(isset($_GET['year']) && isset($_GET['championship']) && isset($_GET['class']))
 {
-	$header=$_GET['federation'].' '.$_GET['championship'].' '.$_GET['class'].' '.$_GET['year'];
+	$st_class_name=$rc_rank->db->prepare(sprintf('SELECT name FROM classes_%s WHERE id=?',$rc_rank->federation));
+	$class_name=$rc_rank->execute($st_class_name,array($_GET['class']),'single');
+	$header=$_GET['federation'].' '.$_GET['championship'].' '.$class_name.' '.$_GET['year'];
 	echo '<h3>'.$header.'</h3>'; //Header text
 	
 	//Get the results created by calculate_rank.php
