@@ -5,7 +5,25 @@ class MyRCM
 	private $auth=false;
 	public $error;
 	public $lang='en';
+	public $ch;
 
+	function init_curl()
+	{
+		$this->ch = curl_init();
+		curl_setopt( $this->ch, CURLOPT_USERAGENT, 'rc-rank/0.0 (https://github.com/datagutten/rc-rank)' );
+		curl_setopt( $this->ch, CURLOPT_ENCODING, "UTF-8" );
+		curl_setopt( $this->ch, CURLOPT_RETURNTRANSFER, true );
+	}
+	function get($url)
+	{
+		if(!isset($this->ch))
+			$this->init_curl();
+		curl_setopt( $this->ch, CURLOPT_URL, $url );
+		$return=curl_exec( $this->ch );
+		if($return===false)
+			throw new Exception(curl_error($this->ch));
+		return $return;
+	}
 	function soap_connect($federation)
 	{
 		if(file_exists($configfile='config_'.$federation.'.php'))
@@ -59,6 +77,23 @@ class MyRCM
 	{
 		return sprintf('http://www.myrcm.ch/myrcm/report/en/%s/%s',$event_primaryKey,$section_primaryKey);
 	}
+	function GetReport($event_primaryKey,$section_primaryKey,$reportKey)
+	{
+		$ReportUrl=$this->ReportUrl($event_primaryKey,$section_primaryKey);
+		$url=sprintf('%s?reportKey=%s&cType=XML',$ReportUrl,$reportKey);
+		$xml_string=$this->get($url);
+		if(empty($xml_string))
+		{
+			$this->error=sprintf('<a href="%s">%s</a>',$this->eventlink($event_primaryKey),sprintf(_('No data on MyRCM for event %d section %d'),$event_primaryKey,$section_primaryKey));
+			return false;
+		}
+		$xml_string=str_replace('UTF-16','UTF-8',$xml_string); //XML header says UTF-16, but content is UTF-8
+		$xml=simplexml_load_string($xml_string);
+		if($xml===false)
+			$this->error='Error loading XML';
+		return $xml;
+
+	}
 	function FinalRankingList($event_primaryKey,$section_primaryKey)
 	{
 		$ReportUrl=$this->ReportUrl($event_primaryKey,$section_primaryKey);
@@ -71,19 +106,7 @@ class MyRCM
 				break;
 			}
 		}
-		$url=sprintf('%s?reportKey=%s&cType=XML',$ReportUrl,$reportKey);
-		$xml_string=file_get_contents($url);
-		if(empty($xml_string))
-		{
-			$this->error=sprintf('<a href="%s">%s</a>',$this->eventlink($event_primaryKey),sprintf(_('No data on MyRCM for event %d section %d'),$event_primaryKey,$section_primaryKey));
-			return false;
-		}
-		$xml_string=str_replace('UTF-16','UTF-8',$xml_string); //XML header says UTF-16, but content is UTF-8
-		$xml=simplexml_load_string($xml_string);
-		
-		if($xml===false)
-			$this->error='Error loading XML';
-		return $xml;
+		return $this->GetReport($event_primaryKey,$section_primaryKey,$reportKey);
 	}
 	function eventlink($eventKey)
 	{
