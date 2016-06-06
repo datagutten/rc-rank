@@ -93,13 +93,13 @@ if(isset($_GET['year']) && isset($_GET['championship']) && isset($_GET['class'])
 		//Result rows
 		$key=0;
 		$rank=1;
-		while($driver=$st_results->fetch(PDO::FETCH_ASSOC))
+		while($driver=$st_results->fetch(PDO::FETCH_ASSOC)) //Fetch total results
 		{
 			$tr_driver[$key]=$dom->createElement_simple('tr',$table);
-			$td_rank[$key]=$dom->createElement_simple('td',$tr_driver[$key],false,$rank);
-			$td_name[$key]=$dom->createElement_simple('td',$tr_driver[$key],false,$driver['name']); //Combine the drivers first and last name
-			//var_dump($rank);
-			foreach($rounds_info as $round)
+			$td_rank[$key]=$dom->createElement_simple('td',$tr_driver[$key],false,$rank); //Column with the rank/total place
+			$td_name[$key]=$dom->createElement_simple('td',$tr_driver[$key],false,$driver['name']); //Column with the drivers name
+
+			foreach($rounds_info as $round) //Loop through the championship rounds
 			{
 				if(!isset($points_round[$round['round']]))
 				{
@@ -125,7 +125,7 @@ if(isset($_GET['year']) && isset($_GET['championship']) && isset($_GET['class'])
 
 	$url=sprintf('calculate_rank.php?federation=%s&championship=%s&year=%s&class=%s',$_GET['federation'],$_GET['championship'],$_GET['year'],$_GET['class']);
 	$li=$dom->createElement_simple('li',$links,false,_('Missing results? '));
-	$dom->createElement_simple('a',$li,array('href'=>$url),_('Calculate points'));
+	$dom->createElement_simple('a',$li,array('href'=>$url),_('Calculate ranks'));
 	$url=sprintf('section_mapping.php?federation=%s&championship=%s&year=%s&type=%s',$_GET['federation'],$_GET['championship'],$_GET['year'],strtoupper(substr($_GET['class'],0,strpos($_GET['class'],'_'))));
 	$li=$dom->createElement_simple('li',$links,false,_('Missing events? '));
 	$dom->createElement_simple('a',$li,array('href'=>$url),_('Map events'));
