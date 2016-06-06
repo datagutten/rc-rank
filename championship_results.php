@@ -75,7 +75,7 @@ if(isset($_GET['year']) && isset($_GET['championship']) && isset($_GET['class'])
 	if($st_results->rowCount()>0)
 	{
 		$rounds_info=$rc_rank->query(sprintf('SELECT * FROM championships_%s WHERE year=%s AND championship=%s AND class=%s ORDER BY round',$rc_rank->federation,$parameters_quoted['year'],$parameters_quoted['championship'],$parameters_quoted['class']),'all');
-		$st_points_round=$rc_rank->db->prepare(sprintf('SELECT *,CONCAT(FirstName, " ", LastName) AS name FROM points_%s WHERE sectionKey=?',$rc_rank->federation));
+		$st_points_round=$rc_rank->db->prepare(sprintf('SELECT *,CONCAT(FirstName, " ", LastName) AS name FROM lap_points_%1$s AS points,participants_%1$s AS participants WHERE points.id=participants.id AND points.sectionKey=?',$rc_rank->federation));
 
 		//Create header row
 		$table=$dom->createElement_simple('table',false,array('border'=>'1'));
