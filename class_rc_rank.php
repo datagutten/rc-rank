@@ -20,7 +20,7 @@ class rc_rank
 	{
 		if(empty($federation))
 		{
-			if(isset($_GET['federation']))
+			if(!empty($_GET['federation']))
 				$federation=$_GET['federation'];
 			elseif(empty($_SESSION['federation']))
 			{
@@ -36,7 +36,7 @@ class rc_rank
 			$this->federations=$this->get_federations();
 		if(array_search($federation,$this->federations)===false)
 		{
-			$this->error='Invalid federation';
+			$this->error='Invalid federation: '.$federation;
 			return false;
 		}
 		elseif(file_exists($configfile='config_'.$federation.'.php'))
