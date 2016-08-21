@@ -18,7 +18,8 @@ if(isset($_GET['federation']))
 	$federation=$_GET['federation'];
 	$rc_rank->init($federation);
 }
-
+if($_GET['class']=='all')
+	$_GET['class']='%';
 foreach($_GET as $key=>$value)
 {
 	if(!preg_match('/[A-Za-z0-9_\-]+/',$value)) //Check if GET input contains illegal characters
@@ -29,6 +30,7 @@ foreach($_GET as $key=>$value)
 		$parameters[$key]=$_GET[$key];
 	}
 }
+
 $filename=basename(__FILE__);
 if(!isset($_GET['federation']))
 	echo selector(_('Select federation'),$rc_rank->get_federations(),$filename,'federation');
@@ -53,7 +55,7 @@ else
 	$st_select_drivers=$rc_rank->db->prepare($q='SELECT *,CONCAT(FirstName, " ", LastName) AS name FROM championships_NMF AS championships,
 lap_points_NMF AS points,
 participants_NMF AS participants
-WHERE championship=? AND year=? AND class=?
+WHERE championship=? AND year=? AND class LIKE ?
 AND championships.sectionKey=points.sectionKey
 AND points.id=participants.id
 ORDER BY name,round');									
@@ -64,7 +66,7 @@ ORDER BY name,round');
 
 	$rc_rank->execute($st_select_drivers,array($parameters['championship'],$parameters['year'],$parameters['class']));
 
-	$st=$rc_rank->query(sprintf('DELETE FROM championship_results_%s WHERE championship=%s AND year=%s AND class=%s',$rc_rank->federation,$parameters_quoted['championship'],$parameters_quoted['year'],$parameters_quoted['class']),false);
+	$st=$rc_rank->query(sprintf('DELETE FROM championship_results_%s WHERE championship=%s AND year=%s AND class LIKE %s',$rc_rank->federation,$parameters_quoted['championship'],$parameters_quoted['year'],$parameters_quoted['class']),false);
 
 	$st_insert_info=$rc_rank->db->prepare(sprintf('INSERT INTO championship_results_%s (FirstName,LastName,championship,year,class,points,last_round,place_last_round) VALUES (?,?,?,?,?,?,?,?)',$rc_rank->federation));
 	$rowcount=$st_select_drivers->rowCount();

@@ -139,8 +139,16 @@ class rc_rank
 
 	function championship_events($championship,$year,$class) //Get events in a championship
 	{
-		$st_championship_events=$this->db->prepare(sprintf('SELECT * FROM championships_%s WHERE championship=? AND year=? AND class=? ORDER BY round',$this->federation));
-		return $this->execute($st_championship_events,array($championship,$year,$class),'all');
+		if($class==='all')
+		{
+			$st_championship_events=$this->db->prepare(sprintf('SELECT * FROM championships_%s WHERE championship=? AND year=? AND class!=\'nocount\' ORDER BY round',$this->federation));
+			return $this->execute($st_championship_events,array($championship,$year),'all');
+		}
+		else
+		{
+			$st_championship_events=$this->db->prepare(sprintf('SELECT * FROM championships_%s WHERE championship=? AND year=? AND class=? ORDER BY round',$this->federation));
+			return $this->execute($st_championship_events,array($championship,$year,$class),'all');
+		}
 	}
 
 	function championship_classes($championship,$year=false) //Get classes run in a championship a given year
