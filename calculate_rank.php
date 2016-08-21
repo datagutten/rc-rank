@@ -1,3 +1,8 @@
+<?Php
+require 'class_rc_rank.php';
+$rc_rank=new rc_rank;
+$init=$rc_rank->init();
+?>
 <!doctype html>
 <html>
 <head>
@@ -7,17 +12,6 @@
 
 <body>
 <?Php
-require_once 'selector.php';
-
-require_once 'class_rc_rank.php';
-
-$rc_rank=new rc_rank;
-$rc_rank->debug=true;
-if(isset($_GET['federation']))
-{
-	$federation=$_GET['federation'];
-	$rc_rank->init($federation);
-}
 if($_GET['class']=='all')
 	$_GET['class']='%';
 foreach($_GET as $key=>$value)
@@ -32,9 +26,7 @@ foreach($_GET as $key=>$value)
 }
 
 $filename=basename(__FILE__);
-if(!isset($_GET['federation']))
-	echo selector(_('Select federation'),$rc_rank->get_federations(),$filename,'federation');
-elseif($rc_rank->init($_GET['federation'])===false)
+if($init===false)
 	echo $rc_rank->error;
 elseif(!isset($_GET['year']))
 	echo selector(_('Select year'),range(date('Y')-1,date('Y')+1),$filename,'year');
