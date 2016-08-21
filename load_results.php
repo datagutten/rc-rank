@@ -60,37 +60,37 @@ else
 
 			$ranking=$MyRCM->FinalRankingList($event['eventKey'],$event['sectionKey']); //Get final ranking list from MyRCM
 			if($ranking===false) //Error occured
-			{
 				echo $MyRCM->error.'<br />';
-				continue;
-			}
-			if(isset($_GET['reload'])) //Delete existing data from database and fetch again
+			else
 			{
-				$st_delete=$rc_rank->db->prepare(sprintf('DELETE FROM results_%s WHERE eventKey=? AND sectionKey=?',$rc_rank->federation));
-				$rc_rank->execute($st_delete,array($event['eventKey'],$event['sectionKey']));
-				echo '<p>'._('Reloading results from MyRCM').'</p>';
-				$id_indb=$rc_rank->query(sprintf('SELECT id FROM results_%s',$rc_rank->federation),'all_column');
-			}
-
-			$place=1;
-			foreach($ranking->RankingList->Ranking as $result) //Load results
-			{
-				$rank=$result->attributes();
-				if(empty($rank->EndTime))
-					continue;
-				$points=$rc_rank->EFRA_GP2[(int)$rank->Rank];
-				echo sprintf('%d: %s %s: %d points (License: %s)',$rank->Rank,$rank->Prename,$rank->Name,$points,$rank->Liz)."<br />\n";	
-
-				$id=sprintf('%s-%s-%s',$event['eventKey'],$event['sectionKey'],$rank->PilotKey); //Create an unique ID
-				if(array_search($id,$id_indb)!==false) //Check if ID is already in DB
+				if(isset($_GET['reload'])) //Delete existing data from database and fetch again
 				{
-					echo "Not updating $id, already in DB<br />\n";
-					continue;
+					$st_delete=$rc_rank->db->prepare(sprintf('DELETE FROM results_%s WHERE eventKey=? AND sectionKey=?',$rc_rank->federation));
+					$rc_rank->execute($st_delete,array($event['eventKey'],$event['sectionKey']));
+					echo '<p>'._('Reloading results from MyRCM').'</p>';
+					$id_indb=$rc_rank->query(sprintf('SELECT id FROM results_%s',$rc_rank->federation),'all_column');
 				}
-				$params=array($id,$event['sectionKey'],$event['eventKey'],$rank->Rank,$rank->PilotKey,$rank->Prename,$rank->Name,(string)$rank->Liz,$rank->AddOn,$rank->LizISOCode,$rank->LizLicenser,$rank->AgeGroup,$rank->Country,$rank->HeatName,$rank->HeatCondition);
-				if($rc_rank->execute($st_insert,$params)===false)
-					die($rc_rank->error);
-				$place++;
+	
+				$place=1;
+				foreach($ranking->RankingList->Ranking as $result) //Load results
+				{
+					$rank=$result->attributes();
+					if(empty($rank->EndTime))
+						continue;
+					$points=$rc_rank->EFRA_GP2[(int)$rank->Rank];
+					echo sprintf('%d: %s %s: %d points (License: %s)',$rank->Rank,$rank->Prename,$rank->Name,$points,$rank->Liz)."<br />\n";	
+	
+					$id=sprintf('%s-%s-%s',$event['eventKey'],$event['sectionKey'],$rank->PilotKey); //Create an unique ID
+					if(array_search($id,$id_indb)!==false) //Check if ID is already in DB
+					{
+						echo "Not updating $id, already in DB<br />\n";
+						continue;
+					}
+					$params=array($id,$event['sectionKey'],$event['eventKey'],$rank->Rank,$rank->PilotKey,$rank->Prename,$rank->Name,(string)$rank->Liz,$rank->AddOn,$rank->LizISOCode,$rank->LizLicenser,$rank->AgeGroup,$rank->Country,$rank->HeatName,$rank->HeatCondition);
+					if($rc_rank->execute($st_insert,$params)===false)
+						die($rc_rank->error);
+					$place++;
+				}
 			}
 			$xml=$MyRCM->GetReport($event['eventKey'],$event['sectionKey'],'100');
 			foreach($xml->PilotList->Pilot as $Pilot)
