@@ -1,3 +1,4 @@
+"use strict";
 function selector(name,choices,next_step,level)
 {
 	//console.log(json);
@@ -45,11 +46,10 @@ function selector(name,choices,next_step,level)
 
 	return selector;
 }
-function add_selector(mode,previous,next_step)
+function add_selector(mode,previous,next_step,selector_name=false)
 {
 	var param=previous.value;
-	var step=document.getElementById(next_step);
-	var next_step_object=document.getElementById(next_step);
+	var previous_values='';
 	//If param is false remove all higher level objects
 	//If param is valid rewrite next object and remove higher than that
 
@@ -58,7 +58,10 @@ function add_selector(mode,previous,next_step)
 	{
 		var level=previous.getAttribute('data-level');
 		console.log('Remove objects higher than level '+level);
-		//var next_level=next_step_object.getAttribute('data-level');
+		if(level>1)
+		{
+			previous_values=get_lower_levels(level);
+		}
 		remove_higher_levels(level);
 	}
 	if(param!='false')
@@ -75,12 +78,16 @@ function add_selector(mode,previous,next_step)
 				{
 					next_step=response.next_step;
 				}
-				var select_input=selector(mode,response.data,next_step,response.level);
+				if(selector_name===false)
+				{
+					selector_name=mode;
+				}
+				var select_input=selector(selector_name,response.data,next_step,response.level);
 				document.getElementsByTagName('form').item(0).appendChild(select_input);
 			}
 		};
-		var federation=document.getElementById('federation').value;
-		xmlhttp.open('GET','selector_backend.php?federation='+federation+'&mode='+mode+'&param='+param,true);
+
+		xmlhttp.open('GET','selector_backend.php?mode='+mode+'&param='+param+previous_values,true);
 		xmlhttp.send();
 	}
 }
@@ -104,4 +111,21 @@ function remove_higher_levels(current_level)
 			inputs[i].parentNode.removeChild(inputs[i]);
 		}
 	}
+}
+function get_lower_levels(current_level)
+{
+	var inputs=document.getElementsByTagName('select');
+	var values='';
+	for(var i=inputs.length-1; i>=0; i--)
+	{
+		var level=inputs[i].getAttribute('data-level');
+
+		if(level<current_level)
+		{
+			values+='&'+inputs[i].name+'='+inputs[i].value;
+		}
+	}
+	console.log(values);
+
+	return values;
 }

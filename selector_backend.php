@@ -3,11 +3,20 @@ require 'class_rc_rank.php';
 $rc_rank=new rc_rank;
 if(!isset($_GET['mode']))
 	die();
-$rc_rank->init($_GET['federation']);
+
+if($rc_rank->init()===false)
+	trigger_error($rc_rank->error,E_USER_ERROR);
 if($_GET['mode']=='year')
 {
 	$years=range(date('Y')-1,date('Y')+1);
 	$data=array_combine($years,$years);
+	$next_step='event';
+	$level=1;
+}
+elseif($_GET['mode']=='year_championship')
+{
+	$years=$rc_rank->query(sprintf('SELECT distinct year FROM championship_results_%s WHERE year IS NOT NULL ORDER BY year',$rc_rank->federation),'all_column');
+	$data=array_combine($years,$years);	
 	$next_step='event';
 	$level=1;
 }
@@ -36,10 +45,8 @@ elseif($_GET['mode']=='championship')
 }
 elseif($_GET['mode']=='class')
 {
-	$classes=$rc_rank->championship_classes($_GET['param']);
-
+	$classes=$rc_rank->championship_classes($_GET['param'],$_GET['year']);
 	$data=$classes;
-
 	$next_step='submit';
 	$level=3;
 }
