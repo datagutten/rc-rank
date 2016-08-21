@@ -32,10 +32,12 @@ elseif(!isset($_GET['year']))
 	echo selector(_('Select year'),range(date('Y')-1,date('Y')+1),$filename,'year');
 elseif(!isset($_GET['championship']))
 	echo selector(_('Select championship'),$rc_rank->championships(),$filename,'championship');
-elseif(!isset($_GET['class']))
-	echo selector(_('Select class'),$rc_rank->championship_classes($_GET['championship']),$filename,'class');
+/*elseif(!isset($_GET['class']))
+	echo selector(_('Select class'),$rc_rank->championship_classes($_GET['championship']),$filename,'class');*/
 else
 {
+	if(!isset($_GET['class']))
+		$_GET['class']='all';
 	$events=$rc_rank->championship_events($_GET['championship'],$_GET['year'],$_GET['class']);
 	if($events===false)
 		echo $rc_rank->error;
@@ -56,7 +58,7 @@ else
 		$id_indb=$rc_rank->query(sprintf('SELECT id FROM results_%s',$rc_rank->federation),'all_column');
 		foreach($events as $event)
 		{
-			echo '<h3>'.$event['championship'].$event['round'].'</h3>';
+			echo '<h3>'.$event['championship'].$event['round'].' '.$event['class'].'</h3>';
 
 			$ranking=$MyRCM->FinalRankingList($event['eventKey'],$event['sectionKey']); //Get final ranking list from MyRCM
 			if($ranking===false) //Error occured
