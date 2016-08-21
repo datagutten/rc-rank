@@ -14,15 +14,21 @@ function selector(name,choices,next_step,level)
 		}
 	}
 	else
+	{
 		selector=document.createElement('select');
+	}
 	selector.setAttribute('name',name);
 	selector.setAttribute('id',name);
 	selector.setAttribute('data-level',level);
 
-	if(next_step!='submit')
+	if(next_step!=='submit')
+	{
 		selector.setAttribute('onChange','add_selector("'+next_step+'",this)');
+	}
 	else
+	{
 		selector.setAttribute('onChange','submit_button(this.value)');
+	}
 	var default_option=document.createElement('option');
 	default_option.setAttribute('value','false');
 	default_option.textContent='Select...';
@@ -41,7 +47,7 @@ function selector(name,choices,next_step,level)
 }
 function add_selector(mode,previous,next_step)
 {
-	var param=previous.value
+	var param=previous.value;
 	var step=document.getElementById(next_step);
 	var next_step_object=document.getElementById(next_step);
 	//If param is false remove all higher level objects
@@ -65,8 +71,10 @@ function add_selector(mode,previous,next_step)
 				//document.getElementById("demo").innerHTML = xhttp.responseText;
 				//console.log(xmlhttp.responseText);
 				var response=JSON.parse(xmlhttp.responseText);
-				if(next_step==undefined)
+				if(next_step===undefined)
+				{
 					next_step=response.next_step;
+				}
 				var select_input=selector(mode,response.data,next_step,response.level);
 				document.getElementsByTagName('form').item(0).appendChild(select_input);
 			}
@@ -87,7 +95,7 @@ function submit_button(value)
 function remove_higher_levels(current_level)
 {
 	var inputs=document.getElementsByTagName('select');
-	for(i=inputs.length-1; i>=0; i--)
+	for(var i=inputs.length-1; i>=0; i--)
 	{
 		var level=inputs[i].getAttribute('data-level');
 
