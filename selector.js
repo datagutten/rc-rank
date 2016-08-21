@@ -3,6 +3,7 @@ function selector(name,choices,next_step,level)
 {
 	//console.log(json);
 	//var items=JSON.parse(json);
+	var url_parameters=decodeURIComponent(window.location.search);
 	var selector=document.getElementById(name);
 	if(selector!=undefined)
 	{
@@ -40,7 +41,13 @@ function selector(name,choices,next_step,level)
 		//console.log(choice);
 		var option=document.createElement('option');
 		option.setAttribute('value',choice_key);
+		option.setAttribute('id','option_'+name+'_'+choice_key);
 		option.textContent=choices[choice_key];
+		if(url_parameters.indexOf(name+'='+choice_key)>0) //Make the current item preselected if the value is in the url
+		{
+			option.setAttribute('selected','selected');
+		}
+		
 		selector.appendChild(option);
 	}
 
@@ -50,6 +57,7 @@ function add_selector(mode,previous,next_step,selector_name=false)
 {
 	var param=previous.value;
 	var previous_values='';
+	var url_parameters=decodeURIComponent(window.location.search);
 	//If param is false remove all higher level objects
 	//If param is valid rewrite next object and remove higher than that
 
@@ -84,6 +92,11 @@ function add_selector(mode,previous,next_step,selector_name=false)
 				}
 				var select_input=selector(selector_name,response.data,next_step,response.level);
 				document.getElementsByTagName('form').item(0).appendChild(select_input);
+
+				if(next_step!=='submit' && url_parameters.indexOf(selector_name+'=')>0) //Call add_selector again if the current field has a value in the url
+				{
+					add_selector(next_step,select_input);
+				}
 			}
 		};
 
@@ -125,7 +138,5 @@ function get_lower_levels(current_level)
 			values+='&'+inputs[i].name+'='+inputs[i].value;
 		}
 	}
-	console.log(values);
-
 	return values;
 }
