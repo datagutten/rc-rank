@@ -2,6 +2,8 @@
 //Get results from MyRCM and write to DB without modification
 if(!isset($rc_rank)) //Script is called directly and is not included
 {
+	require 'class_rc_rank.php';
+	$init=$rc_rank->init();
 	?>
 <!DOCTYPE HTML>
 <html>
@@ -11,11 +13,7 @@ if(!isset($rc_rank)) //Script is called directly and is not included
 </head>
 
 <body>
-	<?php 
-    
-    require 'class_rc_rank.php';
-    $rc_rank=new rc_rank;
-    $rc_rank->debug=true;
+	<?php
     require 'selector.php';
 }
 require 'class_MyRCM.php';
@@ -24,9 +22,7 @@ $MyRCM=new MyRCM;
 $options=getopt('',array('championship:','class:'));
 $filename=basename(__FILE__);
 
-if(!isset($_GET['federation']))
-	echo selector(_('Select federation'),$rc_rank->get_federations(),$filename,'federation');
-elseif($rc_rank->init($_GET['federation'])===false)
+if($init===false)
 	echo $rc_rank->error;
 elseif(!isset($_GET['year']))
 	echo selector(_('Select year'),range(date('Y')-1,date('Y')+1),$filename,'year');
@@ -44,12 +40,12 @@ else
 	elseif(empty($events))
 	{
 		echo sprintf(_('No events for %s'),$_GET['class'])."<br />";
-		echo sprintf('<p><a href="section_mapping.php?%s">%s</a></p>',http_build_query(array('federation'=>$rc_rank->federation,'championship'=>$_GET['championship'],'year'=>$_GET['year'],'type'=>strtoupper(substr($_GET['class'],0,strpos($_GET['class'],'_'))))),_('Map events'));
+		echo sprintf('<p><a href="section_mapping.php?%s">%s</a></p>',http_build_query(array('championship'=>$_GET['championship'],'year'=>$_GET['year'],'type'=>strtoupper(substr($_GET['class'],0,strpos($_GET['class'],'_'))))),_('Map events'));
  
 	}
 	else
 	{
-		echo '<h3>'.sprintf(_('Fetching results for %s %s %s'),$_GET['federation'],$_GET['championship'],$_GET['class']).'</h3>';
+		echo '<h3>'.sprintf(_('Fetching results for %s %s %s'),$rc_rank->federation,$_GET['championship'],$_GET['class']).'</h3>';
 		//$table=$dom->createElement_simple('table',false,array('border'=>'1'));
 		if(!isset($_GET['reload']))
 			echo sprintf('<a href="?%s">%s</a>',http_build_query(array_merge($_GET,array('reload'=>'true'))),_('Remove existing points and reload data from MyRCM'));

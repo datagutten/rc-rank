@@ -1,3 +1,8 @@
+<?Php
+require 'class_rc_rank.php';
+$rc_rank=new rc_rank;
+$init=$rc_rank->init();
+?>
 <!doctype html>
 <html>
 <head>
@@ -9,18 +14,13 @@
 
 
 <?php
-require 'class_rc_rank.php';
-$rc_rank=new rc_rank;
-$rc_rank->debug=true;
 require 'class_MyRCM.php';
 $MyRCM=new MyRCM;
 $MyRCM->init_curl();
 require 'selector.php';
 require_once 'tools/DOMDocument_createElement_simple.php';
 $filename=basename(__FILE__);
-if(!isset($_GET['federation']))
-	echo selector(_('Select federation'),$rc_rank->get_federations(),$filename,'federation');
-elseif($rc_rank->init($_GET['federation'])===false)
+if($init===false)
 	echo $rc_rank->error;
 elseif(!isset($_GET['year']) && !isset($_GET['event']))
 	echo selector(_('Select year'),range(date('Y')-1,date('Y')+1),$filename,'year');

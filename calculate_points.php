@@ -3,7 +3,7 @@
 //Requires event results to be fetched in results table
 require 'class_rc_rank.php';
 $rc_rank=new rc_rank;
-$rc_rank->debug=true;
+$init=$rc_rank->init();
 require 'selector.php';
 ?>
 
@@ -18,9 +18,7 @@ require 'selector.php';
 <?Php
 $filename=basename(__FILE__);
 
-if(!isset($_GET['federation']))
-	echo selector(_('Select federation'),$rc_rank->get_federations(),$filename,'federation');
-elseif($rc_rank->init($_GET['federation'])===false)
+if($init===false)
 	echo $rc_rank->error;
 elseif(!isset($_GET['year']))
 	echo selector(_('Select year'),range(date('Y')-1,date('Y')+1),$filename,'year');

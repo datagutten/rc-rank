@@ -1,3 +1,10 @@
+<?Php
+require 'class_rc_rank.php';
+$rc_rank=new rc_rank;
+$init=$rc_rank->init();
+require 'tools/DOMDocument_createElement_simple.php';
+$dom=new DOMDocumentCustom;
+?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -7,21 +14,14 @@
 
 <body>
 <?Php
-require 'class_rc_rank.php';
-$rc_rank=new rc_rank;
-require 'selector.php';
-
 echo '<h3>'._('Load events from MyRCM').'</h3>';
 
-$filename=basename(__FILE__);
-
-if(!isset($_GET['federation']))
-	echo selector(_('Select federation'),$rc_rank->get_federations(),$filename,'federation');
+if($init===false)
+	echo $rc_rank->error;
 elseif(!isset($_GET['year']))
 {
 	echo _('Enter year to load events from');
 	$form=$dom->createElement_simple('form',false,array('method'=>'get'));
-	$dom->createElement_simple('input',$form,array('type'=>'hidden','name'=>'federation','value'=>$_GET['federation']));
 	$dom->createElement_simple('input',$form,array('type'=>'text','name'=>'year','value'=>date('Y')));
 
 	$dom->createElement_simple('input',$form,array('type'=>'submit'));
@@ -29,8 +29,6 @@ elseif(!isset($_GET['year']))
 }
 else
 {	
-	$rc_rank->init($_GET['federation']);
-	
 	require 'class_MyRCM.php';
 	$MyRCM=new MyRCM;
 	$MyRCM->soap_connect($rc_rank->federation);
@@ -110,7 +108,7 @@ else
 				}
 			}
 		}
-		echo '<a href="section_mapping.php?federation='.$rc_rank->federation.'&year='.$_GET['year'].'">'._('Events loaded. Now you can connect the events and sections to their correct classes.').'</a>';
+		echo '<a href="section_mapping.php?year='.$_GET['year'].'">'._('Events loaded. Now you can connect the events and sections to their correct classes.').'</a>';
 	}
 }
 ?>

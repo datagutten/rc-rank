@@ -1,3 +1,8 @@
+<?php
+require 'class_rc_rank.php';
+$rc_rank=new rc_rank;
+$init=$rc_rank->init();
+?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -18,14 +23,6 @@ $dom=new DOMDocumentCustom;
 $dom->formatOutput=true;
 require 'selector.php';
 
-require 'class_rc_rank.php';
-$rc_rank=new rc_rank;
-
-if(isset($_GET['federation']))
-{
-	$federation=$_GET['federation'];
-	$rc_rank->init($federation);
-}
 if(!isset($_GET['year']) || !is_numeric($_GET['year']))
 	$_GET['year']=date('Y');
 else
@@ -45,8 +42,8 @@ function select($name,$options,$parent=false,$selected=false)
 }
 
 $filename=basename(__FILE__);
-if(!isset($_GET['federation']))
-	echo selector(_('Select federation'),$rc_rank->get_federations(),$filename,'federation');
+if($init===false)
+	echo $rc_rank->error;
 elseif(!isset($_GET['championship']))
 {
 	$championships=$rc_rank->counted_championships;
