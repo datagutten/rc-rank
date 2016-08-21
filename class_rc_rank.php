@@ -1,4 +1,5 @@
 <?php
+session_start();
 class rc_rank
 {
 	public $db=false;
@@ -15,8 +16,20 @@ class rc_rank
 	public $federations=false;
 	public $lang='en';
 
-	function init($federation)
+	function init($federation=false)
 	{
+		if(empty($federation))
+		{
+			if(isset($_GET['federation']))
+				$federation=$_GET['federation'];
+			elseif(empty($_SESSION['federation']))
+			{
+				header('Location: select_federation.php?uri='.urlencode($_SERVER['REQUEST_URI']));
+				die();
+			}
+			else
+				$federation=$_SESSION['federation'];
+		}
 		if($this->debug)
 			ini_set('display_errors',true);
 		if($this->federations===false)
